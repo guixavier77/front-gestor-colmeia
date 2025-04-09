@@ -105,6 +105,7 @@ const TableDash: React.FC<TableProps> = ({
                     padding: isFewColumns ? '10px 16px' : '12px',
                     color: '#FFFFFF',
                     textAlign: 'left',
+                    fontSize: '16px'
                   }}
                 >
                   {col.header}
@@ -128,7 +129,7 @@ const TableDash: React.FC<TableProps> = ({
                   },
                 }}
               >
-               {columns.map((col, index) => {
+              {columns.map((col, index) => {
                   const value = row[col.field]
                   return (
                     <TableCell
@@ -138,6 +139,7 @@ const TableDash: React.FC<TableProps> = ({
                         color: '#1D1D1D',
                         textAlign: 'left',
                         whiteSpace: 'nowrap',
+                        fontWeight: 'light'
                       }}
                     >
                       {col.render ? col.render(value, row) : value}

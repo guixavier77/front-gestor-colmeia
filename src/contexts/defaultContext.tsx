@@ -1,16 +1,12 @@
 
 'use client'
 import ModalFeedBackStatus from '@/components/modals/ModalFeedback';
-import useLoadStores from '@/hooks/useLoadStores';
 import DefaultContextInterface from '@/interfaces/default.interface';
 import FeedBackStatusInterface from '@/interfaces/feedbackStatus';
 import User from '@/interfaces/user.interface';
-import { ROLE } from '@/utils/types/roles';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
-import { useRouter } from 'next/navigation';
 import { createContext, useCallback, useEffect, useState } from 'react';
-import { useTab } from './tabContext';
 export const DefaultContext = createContext<DefaultContextInterface>({} as any)
 
 export default function DefaultProvider({ children }: any) {
