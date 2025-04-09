@@ -22,7 +22,7 @@ const CardDash = ({ icon, title, value }: any) => {
 
   return (
     <div className="flex items-center bg-black rounded-xl shadow-lg p-4 hover:scale-105 transition-transform duration-300">
-      <div className="bg-yellow p-2 rounded-xl flex items-center justify-center">
+      <div className="bg-primary p-2 rounded-xl flex items-center justify-center">
         {React.cloneElement(icon, {
           style: {
             fontSize: 58,

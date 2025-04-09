@@ -10,7 +10,7 @@ const LogoDash = ({ type, styles }: any) => {
     <div className='flex flex-col justify-center items-center'>
       <Image src={LogoImg} alt='Logo' width={50} height={50}/>
       <h1 className={className}>
-        Rede<span className="text-yellow"> Apícola</span>
+        Rede<span className="text-primary"> Apícola</span>
       </h1>
 
     </div>

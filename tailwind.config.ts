@@ -20,12 +20,13 @@ const config: Config = {
       s: { max: '767px' },
     },
     colors: {
+      primary: '#FFCB08',
+      red: '#C90B0B',
       white: '#FFFFFF',
       black: '#1D1D1D',
       gray: '#D9D9D9',
       darkGray: '#6D6D6D',
       light: '#EDEDED',
-      yellow: '#FFCB08',
       green: '#219F02'
     },
     

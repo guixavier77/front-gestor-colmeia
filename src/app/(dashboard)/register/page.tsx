@@ -189,7 +189,7 @@ export default function Register() {
           <div className="flex flex-col justify-center items-center h-screen gap-4">
             <CheckCircleIcon style={{ fontSize: 96, color: colors.red }} />
 
-            <p className="text-yellow font-semibold text-2xl mx-4 text-center">
+            <p className="text-primary font-semibold text-2xl mx-4 text-center">
               Cadastro realizado com sucesso!
             </p>
 

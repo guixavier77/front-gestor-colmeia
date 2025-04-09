@@ -1,8 +1,5 @@
 'use client'
 import { colors } from '@/utils/colors/colors'
-import { TABS_FILTER } from '@/utils/types/tabs'
-import Add from '@mui/icons-material/Add'
-import StoreOutlined from '@mui/icons-material/Store'
 
 const TopDash = ({
   title,
@@ -15,7 +12,7 @@ const TopDash = ({
 }) => {
   return (
     <div className="flex mb-4 items-center">
-      <div className="flex justify-center items-center bg-yellow  p-2 rounded-xl mr-4">
+      <div className="flex justify-center items-center bg-primary  p-2 rounded-xl mr-4">
         <Icon style={{ color: colors.white, fontSize: 48 }} />
       </div>
 

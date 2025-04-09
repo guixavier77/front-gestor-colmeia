@@ -1,22 +1,21 @@
 import Award from "@/interfaces/award.interface";
-import HistoryCustomer from "@/interfaces/historyCustomer.interface";
 import WalletCustomer from "@/interfaces/walletCustomer.interface";
 import api from "@/services/api";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 
-const useLoadHistoryOperator = (hidden: boolean) => {
-  const [data, setdata] = useState<HistoryCustomer[]>([]);
+const useLoadApiarist = (hidden: boolean) => {
+  const [data, setdata] = useState<WalletCustomer[]>([]);
   const [loading, setloading] = useState<boolean>(false)
 
   useEffect(() => {
     if(hidden) return;
     setloading(true);
-    api.get(`reports/operators/historyPoints`)
+    api.get(`/apiarist/list`)
         .then((res) => 
           setdata(res?.data?.data)
         )
-        .catch(error => console.error('[ERROR API] /reports/operators/historyPoints', error?.response?.data))
+        .catch(error => console.error('[ERROR API] /apiarist/list', error?.response?.data))
         .finally(() => setloading(false))
   },[ hidden])
 
@@ -24,4 +23,4 @@ const useLoadHistoryOperator = (hidden: boolean) => {
   return { loading, data}
 }
 
-export default useLoadHistoryOperator;
+export default useLoadApiarist;

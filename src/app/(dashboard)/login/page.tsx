@@ -31,12 +31,11 @@ export default function Login() {
       setloading(true)
       setError('')
       try {
-        const response = await api.post('auth', {
+        const response = await api.post('users/auth', {
           email: values.email,
           password: values?.password,
         })
 
-        console.log(response, 'response')
         if (response.status === 200) {
           const { data: user, token } = response?.data
           if (user && token) {
@@ -90,7 +89,7 @@ export default function Login() {
               />
             </div>
             {error && (
-              <p className="text-center text-yellow font-semibold text-sm">
+              <p className="text-center text-primary font-semibold text-sm">
                 {error}
               </p>
             )}
@@ -106,7 +105,7 @@ export default function Login() {
             <ButtonStyled
               type="submit"
               styles="w-full"
-              bgColor="bg-yellow"
+              bgColor="bg-primary"
               title="Entrar"
               textColor="text-black"
             />

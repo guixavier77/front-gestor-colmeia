@@ -1,15 +1,5 @@
-import CardDash from '@/components/cardDash'
-import GraphicPromotions from '@/components/graphicPromotions'
-import GraphicRewards from '@/components/graphicRewards'
-import TableDash from '@/components/tableDash'
 import TopDash from '@/components/topDash'
-import useLoadDashboardTotals from '@/hooks/useLoadDashboardTotals'
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
-import EmojiEvents from '@mui/icons-material/EmojiEvents'
-import Group from '@mui/icons-material/Group'
-import PaidIcon from '@mui/icons-material/Paid'
-import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined'
-import { useTheme } from '@mui/material/styles'
 const rows = [
   { id: 1, name: 'João', email: 'joao@example.com', cpf: '123.456.789-01', status: 'Ativo', points: 1200 },
   { id: 2, name: 'Maria', email: 'maria@example.com', cpf: '987.654.321-00', status: 'Inativo', points: 900 },
@@ -25,8 +15,8 @@ const columns = [
 ]
 
 const DashboardContent = ({ hidden }: {hidden: boolean}) => {
-  const { data, loading } = useLoadDashboardTotals(hidden)
-  const theme = useTheme() 
+  // const { data, loading } = useLoadDashboardTotals(hidden)
+  // const theme = useTheme() 
   
   return (
     <div hidden={hidden} className="w-full">

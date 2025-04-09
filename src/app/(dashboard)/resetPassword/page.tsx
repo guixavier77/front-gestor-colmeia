@@ -64,7 +64,7 @@ export default function AccountRecovery() {
           <div className="flex flex-col h-full justify-center">
             <div className="flex flex-col flex-1 justify-center">
               <div className="py-5">
-                <h1 className="text-center text-yellow font-bold text-2xl">
+                <h1 className="text-center text-primary font-bold text-2xl">
                   Redefinir senha
                 </h1>
 

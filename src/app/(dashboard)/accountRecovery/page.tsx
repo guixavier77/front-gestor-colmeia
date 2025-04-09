@@ -50,7 +50,7 @@ export default function AccountRecovery() {
           >
             <div className="flex flex-col h-full justify-evenly">
               <div className="py-5">
-                <h1 className="text-center text-yellow font-bold text-2xl">
+                <h1 className="text-center text-primary font-bold text-2xl">
                   Recuperação de senha
                 </h1>
                 <p className="text-center mt-4">

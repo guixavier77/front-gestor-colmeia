@@ -41,7 +41,7 @@ const AsideBar = () => {
       <div className='flex justify-center flex-col items-center'>
         <Image src={logo} alt='Logo' width={100} height={100}/>
         {/* <h1 className="flex flex-col justify-content-center text-2xl text-center text-white font-bold leading-5">
-          Rede<span className="text-2xl  text-yellow">Apícola</span>
+          Rede<span className="text-2xl  text-primary">Apícola</span>
         </h1> */}
       </div>
         <div className="flex flex-col justify-center mt-5 px-4 py-2">
@@ -51,7 +51,7 @@ const AsideBar = () => {
                 user?.role === ROLE.SUPERADMIN) && (
                 <button
                   key={tab.value}
-                  className={`${tabDashSelected === tab.value ? 'bg-yellow' : 'bg-none'} py-2 rounded-xl pl-2 flex gap-5 items-center mb-2 transition-colors duration-500 ease-in`}
+                  className={`${tabDashSelected === tab.value ? 'bg-primary' : 'bg-none'} py-2 rounded-xl pl-2 flex gap-5 items-center mb-2 transition-colors duration-500 ease-in`}
                   onClick={() => setTabDashSelected(tab.value)}
                 >
                   {React.cloneElement(tab.icon, {

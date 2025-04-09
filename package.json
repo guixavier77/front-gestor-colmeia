@@ -23,7 +23,7 @@
     "cookies-next": "^4.2.1",
     "firebase": "^10.8.1",
     "firebase-admin": "^12.0.0",
-    "formik": "^2.4.5",
+    "formik": "^2.4.6",
     "framer-motion": "^12.5.0",
     "html5-qrcode": "2.1.5",
     "js-cookie": "^3.0.5",
@@ -37,6 +37,7 @@
     "qrcode.react": "^3.1.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.55.0",
     "react-qr-reader": "^3.0.0-beta-1",
     "react-qr-scanner": "^1.0.0-alpha.11",
     "recharts": "^2.15.1"

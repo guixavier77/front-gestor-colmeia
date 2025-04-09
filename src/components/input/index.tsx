@@ -46,7 +46,7 @@ const InputStyled = ({maxLength,disabled, label, type, icon, placeholder, value,
 
       </div>
       {error && isTouched &&
-        <p className='font-extralight text-yellow text-base pt-1 pl-12'>{error}</p>
+        <p className='font-light text-red text-base pt-1 text-center'>{error}</p>
       }
     </div>
   )

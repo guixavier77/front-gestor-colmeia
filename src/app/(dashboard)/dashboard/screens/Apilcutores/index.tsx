@@ -1,67 +1,88 @@
 'use client'
-import React, { useMemo, useState } from 'react'
 import PaginationDash from '@/components/PaginationDash'
-import useLoadCustomers from '@/hooks/useLoadCustomers'
-import { CircularProgress } from '@mui/material'
-import { colors } from '@/utils/colors/colors'
-import CardCustomer from '@/components/cards/cardCustomer'
-import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined'
-import TopDash from '@/components/topDash'
+import { useCallback, useMemo, useState } from 'react'
+
 import FilterDash from '@/components/filterDash'
-let itemsPerPage = 7
+import ModalApiarist from '@/components/modals/ModalApiarist'
+import TopDash from '@/components/topDash'
+import useLoadApiarist from '@/hooks/useLoadApiarists'
+import { colors } from '@/utils/colors/colors'
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined'
+import { CircularProgress } from '@mui/material'
+import TableDash from '@/components/tableDash'
+import masks from '@/utils/masks/masks'
+
 
 const ApicultoresContent = ({ hidden }: any) => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const { data, loading } = useLoadCustomers(hidden)
+  const [openModal, setOpenModal] = useState(false);
+  const { data, loading } = useLoadApiarist(hidden)
 
-  const numberPages = useMemo(
-    () => (data.length > 0 ? Math.ceil(data.length / itemsPerPage) : 1),
-    [data],
-  )
 
-  const dataDisplay = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage
-    const endIndex = startIndex + itemsPerPage
-    return data.slice(startIndex, endIndex)
-  }, [currentPage, data])
+  const toggleModalOpen = useCallback(() => setOpenModal(!openModal),[openModal])
+
+  const columns = useMemo(() => [
+    {
+      header: 'Nome',
+      field: 'name',
+    },
+    {
+      header: 'CPF',
+      field: 'cpf',
+      render: (value: any) => masks.cpfMask(value)
+    },
+    {
+      header: 'Telefone',
+      field: 'phone',
+      render: (value: any) => masks.phoneMask(value ?? '00000000000')
+    },
+    {
+      header: 'Editar',
+      field: '{row}'
+    }
+  ],[])
 
   return (
-    <div hidden={hidden} className="w-full relative">
-      <TopDash
-        title="Apicultores"
-        description={`Gerenciamento dos apicultores, com dados de produção, apiários e status das colônias.`}
-        icon={GroupOutlinedIcon}
-      />
-
-      <FilterDash />
-      {loading ? (
-        <>
-          <div className="flex h-3/4 justify-center w-full items-center">
-            <CircularProgress
-              style={{ width: 80, height: 80, color: colors.red }}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="flex flex-col gap-4 mt-10">
-            {dataDisplay?.map((user) => (
-              <>
-                <CardCustomer user={user} />
-              </>
-            ))}
-          </div>
-        </>
-      )}
-
-      <div className="absolute bottom-20 mt-10 right-0">
-        <PaginationDash
-          count={numberPages}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+    <>
+      <div hidden={hidden} className="w-full relative">
+        <TopDash
+          title="Apicultores"
+          description={`Gerenciamento dos apicultores, com dados de produção, apiários e status das colônias.`}
+          icon={GroupOutlinedIcon}
         />
+
+        <FilterDash 
+          handleOpenModal={toggleModalOpen}
+
+        />
+        {loading ? (
+          <>
+            <div className="flex h-3/4 justify-center w-full items-center">
+              <CircularProgress
+                style={{ width: 80, height: 80, color: colors.red }}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex flex-col gap-4 mt-10">
+              <TableDash 
+                columns={columns}
+                data={data}
+
+                rowKey='id'
+              />
+            </div>
+          </>
+        )}
+
       </div>
-    </div>
+
+
+      <ModalApiarist 
+        open={openModal}
+        setIsClose={toggleModalOpen}
+      />
+    </>
   )
 }
 
