@@ -27,8 +27,6 @@ interface ModalParams {
 const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalParams) => {
   const { onShowFeedBack,user } = useContext(DefaultContext);
   const [loading, setloading] = useState(false);
-  const [viewTwo, setViewTwo] = useState(false);
-
   console.log(apiaristSelected);
   const validate = (values: any) => {
     const unmaskCpf = values.cpf.replace(/\D/g, "")
@@ -109,6 +107,7 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
         phone: '',
         latitude: '',
         longitude: '',
+        active: true,
       })
     }
     if (apiaristSelected) {
@@ -117,14 +116,16 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
         cpf,
         phone,
         latitude,
-        longitude
+        longitude,
+        active
       } = apiaristSelected;
       formik.setValues({
         name: name,
         cpf: cpf,
         phone,
         latitude,
-        longitude
+        longitude,
+        active
       });
     }
   }, [apiaristSelected, open])
@@ -136,7 +137,8 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
       name: '',
       phone: '',
       latitude: '',
-      longitude: ''
+      longitude: '',
+      active: true,
     },
     validate,
     onSubmit: async (values) => {
@@ -148,7 +150,8 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
           phone: masks.unmask(values.phone),
           name: values.name,
           latitude: values.latitude,
-          longitude: values.longitude
+          longitude: values.longitude,
+          active: values.active
           
         }
 
@@ -263,6 +266,37 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
                 isTouched={formik.touched.longitude}
 
               />
+
+              <div className="flex flex-row gap-2 items-center">
+                <span className="text-black font-medium">Status:</span>
+                <div className="flex gap-4">
+                  {['Ativo', 'Inativo'].map((label) => {
+                    const isActive = label === 'Ativo'
+                    const selected = formik.values.active === isActive
+
+                    return (
+                      <label
+                        key={label}
+                        className={`px-4 py-1 rounded-40 cursor-pointer text-sm font-semibold transition-all border
+                          ${selected ? (isActive ? 'bg-green text-white border-green' : 'bg-red text-white border-red')
+                                    : 'bg-light text-black border-darkGray'}`}
+                      >
+                        <input
+                          type="radio"
+                          name="active"
+                          value={String(isActive)}
+                          checked={selected}
+                          onChange={() => formik.setFieldValue('active', isActive)}
+                          className="hidden"
+                        />
+                        {label}
+                      </label>
+                    )
+                  })}
+                </div>
+              </div>
+
+
 
               <div className='flex gap-5 pt-5'>
                 <ButtonStyled
