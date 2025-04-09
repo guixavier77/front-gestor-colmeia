@@ -184,7 +184,7 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
       onClose={setIsClose}
       className="flex justify-center items-center"
     >
-      <div className='bg-white rounded-20 w-1/3 p-4'>
+      <div className='bg-white rounded-20 px-5 py-4'>
       <p className='font-semibold text-xl text-center uppercase pb-5'>{apiaristSelected ? "Atualizar Apicultor" : "Cadastro de Apicultor"}</p>
 
         <form className='flex flex-col gap-4' onSubmit={formik.handleSubmit}>
