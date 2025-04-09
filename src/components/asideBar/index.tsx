@@ -18,7 +18,7 @@ const tabs = [
     value: TABS_DASH.DASH,
   },
   {
-    name: 'Clientes',
+    name: 'Apicultores',
     icon: <GroupIcon />,
     value: TABS_DASH.CUSTOMERS,
   },

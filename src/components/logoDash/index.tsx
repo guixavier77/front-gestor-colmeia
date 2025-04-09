@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import LogoImg from '../../assets/logo.png';
 
-const Logo = ({ type, styles }: any) => {
+const LogoDash = ({ type, styles }: any) => {
 
   const textColorClass = type === 'white' ? 'text-white' : 'text-black';
   const className = `text-4xl font-bold text-center ${textColorClass} ${styles}`;
@@ -17,4 +17,4 @@ const Logo = ({ type, styles }: any) => {
   );
 };
 
-export default Logo;
+export default LogoDash;

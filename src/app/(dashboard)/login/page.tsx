@@ -31,14 +31,14 @@ export default function Login() {
       setloading(true)
       setError('')
       try {
-        const response = await api.post('authUsers', {
+        const response = await api.post('auth', {
           email: values.email,
           password: values?.password,
         })
 
         console.log(response, 'response')
         if (response.status === 200) {
-          const { user, token } = response?.data
+          const { data: user, token } = response?.data
           if (user && token) {
             Cookies.set('token', token, { expires: 30 })
             router.push('/dashboard')

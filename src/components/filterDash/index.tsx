@@ -19,7 +19,7 @@ const FilterDash = ({tabs, onPressItem, tab, handleOpenModal }: any) => {
       </div>
       <button
         onClick={handleOpenModal}
-        className="bg-black rounded-xl shadow-xl text-white px-3"
+        className="bg-black rounded-xl shadow-xl text-white px-3 flex justify-center items-center"
       >
         <Add style={{ fontSize: 36, color: '#FFCB08' }} />
       </button>

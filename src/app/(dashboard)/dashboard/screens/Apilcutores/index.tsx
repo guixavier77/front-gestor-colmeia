@@ -7,6 +7,7 @@ import { colors } from '@/utils/colors/colors'
 import CardCustomer from '@/components/cards/cardCustomer'
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined'
 import TopDash from '@/components/topDash'
+import FilterDash from '@/components/filterDash'
 let itemsPerPage = 7
 
 const ApicultoresContent = ({ hidden }: any) => {
@@ -31,6 +32,8 @@ const ApicultoresContent = ({ hidden }: any) => {
         description={`Gerenciamento dos apicultores, com dados de produção, apiários e status das colônias.`}
         icon={GroupOutlinedIcon}
       />
+
+      <FilterDash />
       {loading ? (
         <>
           <div className="flex h-3/4 justify-center w-full items-center">

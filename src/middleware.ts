@@ -9,15 +9,20 @@ import { jwtDecode } from "jwt-decode";
 export default async function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
 
-  // const signInURL = new URL('/login', request.url);
-  // const dashboardURL = new URL('/dashboard', request.url);
-  // if (!token && request.nextUrl.pathname !== '/login' && request.nextUrl.pathname !== '/register' && request.nextUrl.pathname !== '/accountRecovery') {
-  //   return NextResponse.redirect(signInURL);
-  // }
+  const signInURL = new URL('/login', request.url);
+  const dashboardURL = new URL('/dashboard', request.url);
 
-  // if (token) {
-  //   return NextResponse.redirect(dashboardURL);
-  // } 
+  const publicPaths = ['/login', '/register', '/accountRecovery'];
+  const currentPath = request.nextUrl.pathname;
+
+  if (!token && !publicPaths.includes(currentPath)) {
+    return NextResponse.redirect(signInURL);
+  }
+  if (token && publicPaths.includes(currentPath)) {
+    return NextResponse.redirect(dashboardURL);
+  }
+
+  return NextResponse.next();
   
   
 }

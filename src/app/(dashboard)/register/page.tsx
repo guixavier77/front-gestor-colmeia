@@ -1,8 +1,8 @@
 'use client'
-import ButtonStyled from '@/components/GlobalComponents/button'
-import InputStyled from '@/components/GlobalComponents/input'
-import Loading from '@/components/GlobalComponents/loading'
-import SelectStyled from '@/components/GlobalComponents/select'
+import ButtonStyled from '@/components/button'
+import InputStyled from '@/components/input'
+import Loading from '@/components/loading'
+import SelectStyled from '@/components/select'
 import api from '@/services/api'
 import { colors } from '@/utils/colors/colors'
 import masks from '@/utils/masks/masks'
@@ -86,18 +86,12 @@ export default function Register() {
       {loading && <Loading text="Carregando..." />}
 
       {!loading && !sucessRegister && (
-        <>
-          <button className="absolute top-5 left-2">
-            <ArrowBackOutlinedIcon
-              style={{ fontSize: 36, color: colors.red }}
-              onClick={() => router.push('/login')}
-            />{' '}
-          </button>
+        <div className="flex flex-col justify-between h-full">
           <div className="text-center mt-5 pt-5">
-            <PersonOutlineOutlinedIcon />
-            <p className="font-bold uppercase text-lg">Cadastro</p>
+            <PersonOutlineOutlinedIcon style={{fontSize: 48}} />
+            <p className="font-bold uppercase text-2xl">Cadastro</p>
           </div>
-          <form className="flex flex-col h-full" onSubmit={formik.handleSubmit}>
+          <form className="flex flex-col" onSubmit={formik.handleSubmit}>
             <div className="flex flex-col gap-2 h-full">
               <InputStyled
                 id="cpf"
@@ -171,16 +165,16 @@ export default function Register() {
               />
             </div>
 
-            <div className="mt-5 py-5">
-              <ButtonStyled
-                type="submit"
-                styles="w-full"
-                bgColor="bg-yellow"
-                title="Cadastrar"
-              />
-            </div>
           </form>
-        </>
+          <div className="mt-5 py-5">
+            <ButtonStyled
+              type="submit"
+              styles="w-full"
+              bgColor="bg-black"
+              title="Cadastrar"
+            />
+          </div>
+        </div>
       )}
 
       {!loading && sucessRegister && (
