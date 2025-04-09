@@ -11,6 +11,8 @@ import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
+import Image from 'next/image'
+import logoimg from '../../assets/logo.png'
 
 const tabs = [
   {
@@ -40,16 +42,16 @@ export default function MenuMobile() {
     <>
 
       <div className="fixed top-0 left-0 w-full bg-black px-4 py-2 flex justify-between items-center md:hidden z-50 shadow-lg border-b border-darkGray">
-        <span className="text-white text-sm font-bold">Menu</span>
+        {<Image src={logoimg} alt="Logo" width={30} height={30} />}
         <div />
         <button onClick={() => setIsOpen(!isOpen)} className="text-white">
-          {isOpen ? <CloseIcon /> : <MenuIcon />}
+          {isOpen ? <CloseIcon style={{fontSize: 30}}/> : <MenuIcon style={{fontSize: 30}}/>}
         </button>
       </div>
 
 
       {isOpen && (
-        <div className="fixed top-10 left-0 w-full bg-black shadow-md flex justify-around items-center py-3 md:hidden z-40 border-b border-darkGray flex-col gap-4">
+        <div className="fixed top-12 left-0 w-full bg-black shadow-md flex justify-around items-center py-3 md:hidden z-40 border-b border-darkGray flex-col gap-4">
           {tabs.map(
             (tab) =>
               (tab.value !== TABS_DASH.STORE ||
