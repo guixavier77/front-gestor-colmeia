@@ -59,7 +59,7 @@ const TableDash: React.FC<TableProps> = ({
   }, [currentPage, filteredData])
 
   return (
-    <div className="relative flex flex-col gap-4 mt-10 h-[80%] justify-between">
+    <div className="relative flex flex-col gap-4 mt-10 h-[80%] justify-between py-3">
       <div>
         <div className="flex justify-end mb-4">
           <InputStyled

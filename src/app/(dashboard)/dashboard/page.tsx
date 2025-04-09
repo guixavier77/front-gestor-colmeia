@@ -5,8 +5,7 @@ import HeaderDash from '@/components/headerDash'
 import { useTab } from '@/contexts/tabContext'
 import CustomersContent from '@/app/(dashboard)/dashboard/screens/Apilcutores'
 import DashboardContent from '@/app/(dashboard)/dashboard/screens/Dashboard'
-
-
+import MenuMobile from '@/components/menuMobile'
 import { TABS_DASH } from '@/utils/types/tabs'
 
 export default function Dashboard() {
@@ -14,22 +13,28 @@ export default function Dashboard() {
 
   return (
     <main className="flex h-screen w-screen">
-      <AsideBar />
+      <div className="s:hidden">
+        <AsideBar />
+      </div>
 
-      <div className="flex flex-col h-full w-full ">
+      <div className="flex flex-col h-full w-full">
         <HeaderDash />
 
-        <div className="flex-grow bg-gray-100 p-4 overflow-y-auto">
+        <div className="flex-grow bg-gray-100 p-4 pb-20 md:pb-0">
+    
           <div className="flex h-full justify-center w-full">
             <DashboardContent hidden={tabDashSelected !== TABS_DASH.DASH} />
-            <CustomersContent
-              hidden={tabDashSelected !== TABS_DASH.CUSTOMERS}
-            />
-
+            <CustomersContent hidden={tabDashSelected !== TABS_DASH.CUSTOMERS} />
           </div>
         </div>
 
-        <FooterDash />
+        <div className="s:hidden">
+          <FooterDash />
+        </div>
+
+        <div className='t:hidden d:hidden'>
+          <MenuMobile />
+        </div>
       </div>
     </main>
   )
