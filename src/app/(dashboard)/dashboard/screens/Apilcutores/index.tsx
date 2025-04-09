@@ -60,7 +60,7 @@ const ApicultoresContent = ({ hidden }: any) => {
           onClick={() => toogleModalOpenWithData(row)}
           type='button'
           icon={<EditOutlined />}
-          styles='px-1 py-1'
+          styles='px-1 h-8 w-8'
           title=''
         />
       )
@@ -72,14 +72,11 @@ const ApicultoresContent = ({ hidden }: any) => {
       <div hidden={hidden} className="w-full relative">
         <TopDash
           title="Apicultores"
-          description={`Gerenciamento dos apicultores, com dados de produção, apiários e status das colônias.`}
+          description={`Gerenciamento dos apicultores, com dados de produção,\n\n apiários e status das colônias.`}
           icon={GroupOutlinedIcon}
+          onClick={toggleModalOpen}
         />
 
-        <FilterDash 
-          handleOpenModal={toggleModalOpen}
-
-        />
         {loading ? (
           <>
             <div className="flex h-3/4 justify-center w-full items-center">
@@ -90,14 +87,13 @@ const ApicultoresContent = ({ hidden }: any) => {
           </>
         ) : (
           <>
-            <div className="flex flex-col gap-4 mt-10">
-              <TableDash 
-                columns={columns}
-                data={data}
+            <TableDash 
+              columns={columns}
+              data={data}
 
-                rowKey='id'
-              />
-            </div>
+              rowKey='id'
+            />
+            
           </>
         )}
 
