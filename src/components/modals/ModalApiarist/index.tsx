@@ -2,30 +2,23 @@ import ButtonStyled from '@/components/button';
 import InputStyled from '@/components/input';
 import { DefaultContext } from '@/contexts/defaultContext';
 import api from '@/services/api';
+import { colors } from '@/utils/colors/colors';
 import PreFeedBack from '@/utils/feedbackStatus';
 import masks from '@/utils/masks/masks';
-import { ROLE, ROLE_PTBR } from '@/utils/types/roles';
 import ArticleOutlined from '@mui/icons-material/ArticleOutlined';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LocalPhoneOutlined from '@mui/icons-material/LocalPhoneOutlined';
 import PersonOutlineOutlined from '@mui/icons-material/PersonOutlineOutlined';
 import { CircularProgress, Modal } from '@mui/material';
 import { useFormik } from 'formik';
 import { useContext, useEffect, useState } from 'react';
 import CustomizedSteppers from '../../StepBar';
-import { colors } from '@/utils/colors/colors';
-import LocalPhoneOutlined from '@mui/icons-material/LocalPhoneOutlined';
-
-interface ApiaristPayload {
-  name: string,
-  cpf: string,
-  phone: string,
-  id?: number
-}
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import Apiarist from '@/interfaces/apiarist.interface';
 
 interface ModalParams {
   open: boolean,
   setIsClose: () => void,
-  apiaristSelected?: ApiaristPayload
+  apiaristSelected?: Apiarist
   loadData: () => Promise<void>;
 }
 
@@ -36,10 +29,24 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
   const [loading, setloading] = useState(false);
   const [viewTwo, setViewTwo] = useState(false);
 
+  console.log(apiaristSelected);
   const validate = (values: any) => {
     const unmaskCpf = values.cpf.replace(/\D/g, "")
+    const unmaskPhone = values.phone.replace(/\D/g, "");
     let errors: any = {};
   
+    if (!values.latitude) {
+      errors.latitude = 'Este campo é necessário';
+    } else if (Number(values.latitude) < -90 || Number(values.latitude) > 90) {
+      errors.latitude = 'Latitude deve estar entre -90 e 90';
+    }
+  
+    if (!values.longitude) {
+      errors.longitude = 'Este campo é necessário';
+    } else if (Number(values.longitude) < -180 || Number(values.longitude) > 180) {
+      errors.longitude = 'Longitude deve estar entre -180 e 180';
+    }
+
     if (!values.cpf) {
       errors.cpf = 'Este campo é necessário';
     } else if (masks.cpfMask(values.cpf).length < 14) {
@@ -48,9 +55,10 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
       errors.cpf = 'CPF inválido';
     }
 
-    if (!values.phone) {
+    console.log(values.phone);
+    if (!unmaskPhone) {
       errors.phone = 'Este campo é necessário'
-    } else if (values.phone.length < 15) {
+    } else if (unmaskPhone < 11) {
       errors.phone = 'Número inválido. Use o formato (11) 12345-6789'
     }
     
@@ -99,6 +107,8 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
         cpf: '',
         name: '',
         phone: '',
+        latitude: '',
+        longitude: '',
       })
     }
     if (apiaristSelected) {
@@ -106,11 +116,15 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
         name,
         cpf,
         phone,
+        latitude,
+        longitude
       } = apiaristSelected;
       formik.setValues({
         name: name,
         cpf: cpf,
         phone,
+        latitude,
+        longitude
       });
     }
   }, [apiaristSelected, open])
@@ -121,24 +135,26 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
       cpf: '',
       name: '',
       phone: '',
+      latitude: '',
+      longitude: ''
     },
     validate,
     onSubmit: async (values) => {
       setloading(true);
 
-      const data: ApiaristPayload = {
-        cpf: masks.unmask(values.cpf),
-        phone: masks.unmask(values.phone),
-        name: values.name,
-        
-      }
-
-  
+      const data: Omit<Apiarist, 'id' | 'created_at' | 'updated_at'>
+        = {
+          cpf: masks.unmask(values.cpf),
+          phone: masks.unmask(values.phone),
+          name: values.name,
+          latitude: values.latitude,
+          longitude: values.longitude
+          
+        }
 
       try {
         if (apiaristSelected) {
-          data.id = apiaristSelected.id;
-          await api.put('/apiarist/update', data);
+          await api.put(`/apiarist/update/${apiaristSelected.id}`, data);
           onSuccessUpdate();
         } else {
           await api.post('/apiarist/create', data);
@@ -216,7 +232,35 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
                 maxLength={15}
                 error={formik.errors.phone}
                 onBlur={formik.handleBlur}
-                isTouched={formik.touched.name}
+                isTouched={formik.touched.phone}
+
+              />
+
+              <InputStyled
+                id="latitude"
+                onChange={formik.handleChange}
+                value={(formik.values.latitude)}
+                label="Latitude"
+                type="text"
+                placeholder=""
+                icon={<AddLocationIcon style={{ color: colors.black }} />}
+                error={formik.errors.latitude}
+                onBlur={formik.handleBlur}
+                isTouched={formik.touched.latitude}
+
+              />
+
+              <InputStyled
+                id="longitude"
+                onChange={formik.handleChange}
+                value={(formik.values.longitude)}
+                label="Longitude"
+                type="text"
+                placeholder=""
+                icon={<AddLocationIcon style={{ color: colors.black }} />}
+                error={formik.errors.longitude}
+                onBlur={formik.handleBlur}
+                isTouched={formik.touched.longitude}
 
               />
 
