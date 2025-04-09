@@ -8,7 +8,7 @@ import { ROLE, ROLE_PTBR } from '@/utils/types/roles';
 import ArticleOutlined from '@mui/icons-material/ArticleOutlined';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import PersonOutlineOutlined from '@mui/icons-material/PersonOutlineOutlined';
-import { Modal } from '@mui/material';
+import { CircularProgress, Modal } from '@mui/material';
 import { useFormik } from 'formik';
 import { useContext, useEffect, useState } from 'react';
 import CustomizedSteppers from '../../StepBar';
@@ -26,11 +26,12 @@ interface ModalParams {
   open: boolean,
   setIsClose: () => void,
   apiaristSelected?: ApiaristPayload
+  loadData: () => Promise<void>;
 }
 
 
 
-const ModalApiarist = ({ open, setIsClose, apiaristSelected }: ModalParams) => {
+const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalParams) => {
   const { onShowFeedBack,user } = useContext(DefaultContext);
   const [loading, setloading] = useState(false);
   const [viewTwo, setViewTwo] = useState(false);
@@ -47,7 +48,6 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected }: ModalParams) => {
       errors.cpf = 'CPF inválido';
     }
 
-    console.log(values);
     if (!values.phone) {
       errors.phone = 'Este campo é necessário'
     } else if (values.phone.length < 15) {
@@ -119,7 +119,6 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected }: ModalParams) => {
       cpf: '',
       name: '',
       phone: '',
-     
     },
     validate,
     onSubmit: async (values) => {
@@ -134,18 +133,26 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected }: ModalParams) => {
 
   
 
-      console.log(data);
-      if(apiaristSelected) {
-        data.id = apiaristSelected.id
-        api.put('/apiarist/update', data)
-          .then(onSuccessUpdate)
-          .catch(error => onErrorUpdate(error))
-          .finally(() => setloading(false));
-      } else {
-        api.post('/apiarist/create', data)
-          .then(onSuccess)
-          .catch(error => onError(error))
-          .finally(() => setloading(false));
+      try {
+        if (apiaristSelected) {
+          data.id = apiaristSelected.id;
+          await api.put('/apiarist/update', data);
+          onSuccessUpdate();
+        } else {
+          await api.post('/apiarist/create', data);
+          onSuccess();
+        }
+  
+        await loadData(); 
+  
+      } catch (error) {
+        if (apiaristSelected) {
+          onErrorUpdate(error);
+        } else {
+          onError(error);
+        }
+      } finally {
+        setloading(false);
       }
     }
   })
@@ -220,12 +227,23 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected }: ModalParams) => {
                   title="Cancelar"
                 />
               
-                <ButtonStyled
-                  type="submit"
-                  styles="w-full"
-                  bgColor='bg-black'
-                  title="Cadastrar"
-                />
+              {loading ?
+                  <ButtonStyled
+                    bgColor='bg-darkGray'
+                    textColor='text-white'
+                    type="submit"
+                    styles="w-full"
+                    title='Cadastrando...'
+                    icon={<CircularProgress style={{ width: 20, height: 20, color: '#FFFFFF' }} />}
+  
+                  /> :
+                  <ButtonStyled
+                    type="submit"
+                    styles="w-full"
+                    title={apiaristSelected ? "Atualizar" : "Cadastrar"}
+                  />
+  
+                }
               </div>
 
               

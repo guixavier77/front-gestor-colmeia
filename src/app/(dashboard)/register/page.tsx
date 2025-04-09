@@ -100,7 +100,7 @@ export default function Register() {
                 label="CPF"
                 type="tel"
                 placeholder="000.000.000-00"
-                icon={<ArticleOutlinedIcon style={{ color: colors.red }} />}
+                icon={<ArticleOutlinedIcon style={{ color: colors.primary }} />}
               />
               <InputStyled
                 id="name"
@@ -110,7 +110,7 @@ export default function Register() {
                 type="text"
                 placeholder="Exemplo"
                 icon={
-                  <PersonOutlineOutlinedIcon style={{ color: colors.red }} />
+                  <PersonOutlineOutlinedIcon style={{ color: colors.primary }} />
                 }
               />
               <InputStyled
@@ -120,7 +120,7 @@ export default function Register() {
                 label="E-mail"
                 type="text"
                 placeholder="exemplo@gmail.com"
-                icon={<MailOutlineIcon style={{ color: colors.red }} />}
+                icon={<MailOutlineIcon style={{ color: colors.primary }} />}
               />
 
               <InputStyled
@@ -130,7 +130,7 @@ export default function Register() {
                 label="Telefone"
                 type="text"
                 placeholder="(00) 00000-0000"
-                icon={<LocalPhoneOutlinedIcon style={{ color: colors.red }} />}
+                icon={<LocalPhoneOutlinedIcon style={{ color: colors.primary }} />}
               />
 
               <InputStyled
@@ -141,13 +141,13 @@ export default function Register() {
                 type="tel"
                 placeholder="DD/MM/YYYY"
                 icon={
-                  <CalendarMonthOutlinedIcon style={{ color: colors.red }} />
+                  <CalendarMonthOutlinedIcon style={{ color: colors.primary }} />
                 }
               />
 
               <SelectStyled
                 label="Sexo"
-                icon={<WcIcon style={{ color: colors.red }} />}
+                icon={<WcIcon style={{ color: colors.primary }} />}
                 value={formik.values.sex}
                 onChange={formik.handleChange}
                 id="sex"
@@ -161,7 +161,7 @@ export default function Register() {
                 label="Senha"
                 type="password"
                 placeholder="***********"
-                icon={<LockOutlinedIcon style={{ color: colors.red }} />}
+                icon={<LockOutlinedIcon style={{ color: colors.primary }} />}
               />
             </div>
 
@@ -181,13 +181,13 @@ export default function Register() {
         <>
           <button className="absolute top-2 left-2">
             <ArrowBackOutlinedIcon
-              style={{ fontSize: 36, color: colors.red }}
+              style={{ fontSize: 36, color: colors.primary }}
               onClick={() => router.push('/login')}
             />{' '}
           </button>
 
           <div className="flex flex-col justify-center items-center h-screen gap-4">
-            <CheckCircleIcon style={{ fontSize: 96, color: colors.red }} />
+            <CheckCircleIcon style={{ fontSize: 96, color: colors.primary }} />
 
             <p className="text-primary font-semibold text-2xl mx-4 text-center">
               Cadastro realizado com sucesso!
