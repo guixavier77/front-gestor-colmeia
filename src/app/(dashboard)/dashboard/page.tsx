@@ -13,7 +13,7 @@ export default function Dashboard() {
   const { tabDashSelected } = useTab()
 
   return (
-    <main className="flex h-screen w-screen overflow-hidden">
+    <main className="flex h-screen w-screen">
       <AsideBar />
 
       <div className="flex flex-col h-full w-full ">
