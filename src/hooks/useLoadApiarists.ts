@@ -1,11 +1,9 @@
-import Award from "@/interfaces/award.interface";
-import WalletCustomer from "@/interfaces/walletCustomer.interface";
 import api from "@/services/api";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const useLoadApiarist = (hidden: boolean) => {
-  const [data, setdata] = useState<WalletCustomer[]>([]);
+  const [data, setdata] = useState<any[]>([]);
   const [loading, setloading] = useState<boolean>(false)
 
   useEffect(() => {
