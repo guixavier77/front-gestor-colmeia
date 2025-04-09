@@ -90,11 +90,11 @@ const TableDash: React.FC<TableProps> = ({
                     <TableCell
                       key={index}
                       sx={{
-                        fontWeight: 'bold',
-                        padding: isFewColumns ? '10px 16px' : '12px',
+                        // fontWeight: 'bold',
+                        padding: isFewColumns ? '10px 16px' : '8px 10px',
                         color: '#FFFFFF',
                         textAlign: 'left',
-                        fontSize: '16px',
+                        fontSize: '14px',
                         whiteSpace: 'nowrap',
                       }}
                     >
@@ -125,11 +125,12 @@ const TableDash: React.FC<TableProps> = ({
                         <TableCell
                           key={index}
                           sx={{
-                            padding: isFewColumns ? '10px 16px' : '12px',
+                            padding: isFewColumns ? '10px 16px' : '8px 10px',
                             color: colors.black,
                             textAlign: 'left',
                             whiteSpace: 'nowrap',
                             fontWeight: 'light',
+                            fontSize: '14px'
                           }}
                         >
                           {col.render ? col.render(value, row) : value}

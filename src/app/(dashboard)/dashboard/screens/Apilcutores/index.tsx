@@ -14,6 +14,7 @@ import masks from '@/utils/masks/masks'
 import ButtonStyled from '@/components/button'
 import EditOutlined from '@mui/icons-material/EditOutlined'
 import Apiarist from '@/interfaces/apiarist.interface'
+import dateFormat from 'dateformat';
 
 
 const ApicultoresContent = ({ hidden }: any) => {
@@ -30,6 +31,16 @@ const ApicultoresContent = ({ hidden }: any) => {
   },[toggleModalOpen])
 
   const columns = useMemo(() => [
+    {
+      header: 'Data Cad.',
+      field: 'created_at',
+      render: (value: any) => value ? dateFormat(value, 'dd/mm/yyyy HH:MM') : '',
+    },
+    {
+      header: 'Data Att',
+      field: 'updated_at',
+      render: (value: any) => value ? dateFormat(value, 'dd/mm/yyyy HH:MM') : '',
+    },
     {
       header: 'Nome',
       field: 'name',
@@ -51,6 +62,12 @@ const ApicultoresContent = ({ hidden }: any) => {
     {
       header: 'Longitude',
       field: 'longitude',
+    },
+    {
+      header: 'Status',
+      field: 'active',
+      render: (value: any) => value ? 'Ativo' : 'Inativo'
+
     },
     {
       header: 'Editar',

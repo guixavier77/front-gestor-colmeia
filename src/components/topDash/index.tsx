@@ -28,10 +28,10 @@ const TopDash = ({ title, description, icon: Icon, onClick }: TopDashProps) => {
       {onClick &&
         <ButtonStyled 
           title={'Novo Apicultor'}
-          icon={<AddIcon style={{ color: colors.primary, fontSize: 42 }} />}
+          icon={<AddIcon style={{ color: colors.primary, fontSize: 30 }} />}
           onClick={onClick}
           type='button'
-          styles='px-6  text-lg h-14'
+          styles='px-4  text-base h-12 '
         />
       }
 
