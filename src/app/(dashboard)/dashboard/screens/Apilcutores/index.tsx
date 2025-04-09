@@ -15,8 +15,7 @@ import masks from '@/utils/masks/masks'
 
 const ApicultoresContent = ({ hidden }: any) => {
   const [openModal, setOpenModal] = useState(false);
-  const { data, loading } = useLoadApiarist(hidden)
-
+  const {loadData, data, loading } = useLoadApiarist(hidden)
 
   const toggleModalOpen = useCallback(() => setOpenModal(!openModal),[openModal])
 
@@ -58,7 +57,7 @@ const ApicultoresContent = ({ hidden }: any) => {
           <>
             <div className="flex h-3/4 justify-center w-full items-center">
               <CircularProgress
-                style={{ width: 80, height: 80, color: colors.red }}
+                style={{ width: 80, height: 80, color: colors.primary }}
               />
             </div>
           </>
@@ -81,6 +80,7 @@ const ApicultoresContent = ({ hidden }: any) => {
       <ModalApiarist 
         open={openModal}
         setIsClose={toggleModalOpen}
+        loadData={loadData}
       />
     </>
   )

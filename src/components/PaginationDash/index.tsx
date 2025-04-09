@@ -34,8 +34,9 @@ const PaginationDash: React.FC<PaginationDashProps> = ({ count, currentPage, set
             borderWidth: 0,
             
             '&.Mui-selected': {
-              backgroundColor: colors.red,
-              color: colors.white,
+              backgroundColor: colors.primary,
+              color: colors.black,
+              fontWeight: 'bold',
               borderColor: colors.black,
               borderWidth: 0,
             },
