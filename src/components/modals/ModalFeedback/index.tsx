@@ -54,7 +54,7 @@ const ModalFeedBackStatus = ({open, setIsClose, status,title, description }: Mod
         <StatusIcon style={{ fontSize: 96, color: status === STATUS.SUCCESS ? colors.green : colors.red }} />
         <h1 className='font-bold text-3xl pt-3 pb-2'>{title}</h1>
         <p className='font-light '>{description}</p>
-        <p className='pt-3 font-bold '>{'00:0'+timer}</p>
+        {/* <p className='pt-3 font-bold '>{'00:0'+timer}</p> */}
 
       </div>
     </Modal>

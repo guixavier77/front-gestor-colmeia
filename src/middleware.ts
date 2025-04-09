@@ -14,6 +14,10 @@ export default async function middleware(request: NextRequest) {
 
   const publicPaths = ['/login', '/register', '/accountRecovery'];
   const currentPath = request.nextUrl.pathname;
+  
+  if (currentPath === '/') {
+    return NextResponse.redirect(signInURL);
+  }
 
   if (!token && !publicPaths.includes(currentPath)) {
     return NextResponse.redirect(signInURL);

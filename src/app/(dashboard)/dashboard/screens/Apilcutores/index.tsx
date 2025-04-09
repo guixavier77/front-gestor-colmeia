@@ -11,13 +11,23 @@ import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined'
 import { CircularProgress } from '@mui/material'
 import TableDash from '@/components/tableDash'
 import masks from '@/utils/masks/masks'
+import ButtonStyled from '@/components/button'
+import EditOutlined from '@mui/icons-material/EditOutlined'
+import Apiarist from '@/interfaces/apiarist.interface'
 
 
 const ApicultoresContent = ({ hidden }: any) => {
   const [openModal, setOpenModal] = useState(false);
+  const [dataSelected, setDataSelected] = useState<Apiarist>();
   const {loadData, data, loading } = useLoadApiarist(hidden)
 
   const toggleModalOpen = useCallback(() => setOpenModal(!openModal),[openModal])
+
+
+  const toogleModalOpenWithData = useCallback((row: Apiarist) => {
+    setDataSelected(row);
+    toggleModalOpen();
+  },[toggleModalOpen])
 
   const columns = useMemo(() => [
     {
@@ -35,10 +45,27 @@ const ApicultoresContent = ({ hidden }: any) => {
       render: (value: any) => masks.phoneMask(value ?? '00000000000')
     },
     {
+      header: 'Latitude',
+      field: 'latitude',
+    },
+    {
+      header: 'Longitude',
+      field: 'longitude',
+    },
+    {
       header: 'Editar',
-      field: '{row}'
+      field: '{row}',
+      render: (_: any, row: any) => (
+        <ButtonStyled 
+          onClick={() => toogleModalOpenWithData(row)}
+          type='button'
+          icon={<EditOutlined />}
+          styles='px-1 py-1'
+          title=''
+        />
+      )
     }
-  ],[])
+  ],[toogleModalOpenWithData])
 
   return (
     <>
@@ -81,6 +108,7 @@ const ApicultoresContent = ({ hidden }: any) => {
         open={openModal}
         setIsClose={toggleModalOpen}
         loadData={loadData}
+        apiaristSelected={dataSelected}
       />
     </>
   )
