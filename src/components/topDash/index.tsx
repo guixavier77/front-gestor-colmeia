@@ -6,14 +6,14 @@ import AddIcon from '@mui/icons-material/Add';
 interface TopDashProps {
   title: string
   description: string
-  icon: any // se quiser tipar melhor, pode ser React.ElementType
+  icon: any 
   onClick?: () => void
 }
 
 const TopDash = ({ title, description, icon: Icon, onClick }: TopDashProps) => {
   return (
-    <div className="flex mb-4 items-center justify-between">
-      <div className='flex items-center  max-w-[40%]'>
+    <div className="flex mb-4 items-center justify-between flex-wrap gap-4">
+      <div className='flex items-center max-w-1/3'>
         <div className="flex justify-center items-center bg-primary  p-2 rounded-xl mr-4">
           <Icon style={{ color: colors.white, fontSize: 48 }} />
         </div>
