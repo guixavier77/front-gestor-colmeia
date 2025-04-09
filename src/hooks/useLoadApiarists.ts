@@ -1,15 +1,15 @@
+import Apiarist from "@/interfaces/apiarist.interface";
 import api from "@/services/api";
 import { useCallback, useEffect, useState } from "react";
 
 
 const useLoadApiarist = (hidden: boolean) => {
-  const [data, setdata] = useState<any[]>([]);
+  const [data, setdata] = useState<Apiarist[]>([]);
   const [loading, setloading] = useState<boolean>(false)
 
 
   const loadData = useCallback(async () => {
     try {
-      console.log('CHAMOU A FUNÇÃO');
       setloading(true);
       const res = await api.get(`/apiarist/list`);
       setdata(res?.data?.data);
@@ -21,10 +21,8 @@ const useLoadApiarist = (hidden: boolean) => {
   }, []);
   
   useEffect(() => {
-    if(hidden) return;
-    setloading(true);
-    loadData();
-  },[loadData,hidden])
+    if (!hidden) loadData();
+  }, [loadData, hidden]);
 
 
   return { loading, data, loadData}

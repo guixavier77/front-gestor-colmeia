@@ -66,23 +66,27 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
 
 
   const onSuccess = () => {
-    onShowFeedBack(PreFeedBack.success('Usuário cadastrado com sucesso!'))
+    onShowFeedBack(PreFeedBack.success('Apicultor cadastrado com sucesso!'))
     setIsClose();
   }
 
-  const onError = (e: any) => {
-    onShowFeedBack(PreFeedBack.error('Falhou ao cadastrar usuário.'))
-    console.log('[ERROR API /users]', e?.response?.data)
-  }
   const onSuccessUpdate = () => {
-    onShowFeedBack(PreFeedBack.success('Usuário atualizado com sucesso!'))
+    onShowFeedBack(PreFeedBack.success('Apicultor atualizado com sucesso!'))
     setIsClose();
   }
-
+  
+  const onError = (e: any) => {
+    const errorMessage = e?.response?.data?.error || 'Falhou ao cadastrar apicultor.';
+    onShowFeedBack(PreFeedBack.error(errorMessage));
+    console.log('[ERROR API /apiarist]', errorMessage);
+  };
+  
   const onErrorUpdate = (e: any) => {
-    onShowFeedBack(PreFeedBack.error('Falhou ao atualizar usuário.'))
-    console.log('[ERROR API /users]', e?.response?.data)
-  }
+    const errorMessage = e?.response?.data?.error || 'Falhou ao atualizar apicultor.';
+    onShowFeedBack(PreFeedBack.error(errorMessage));
+    console.log('[ERROR API /apiarist]', errorMessage);
+  };
+  
 
 
 
@@ -102,13 +106,11 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
         name,
         cpf,
         phone,
-       
       } = apiaristSelected;
       formik.setValues({
         name: name,
         cpf: cpf,
         phone,
-       
       });
     }
   }, [apiaristSelected, open])

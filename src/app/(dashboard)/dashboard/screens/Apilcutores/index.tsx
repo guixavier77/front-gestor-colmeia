@@ -17,8 +17,6 @@ const ApicultoresContent = ({ hidden }: any) => {
   const [openModal, setOpenModal] = useState(false);
   const {loadData, data, loading } = useLoadApiarist(hidden)
 
-  console.log(data);
-
   const toggleModalOpen = useCallback(() => setOpenModal(!openModal),[openModal])
 
   const columns = useMemo(() => [
