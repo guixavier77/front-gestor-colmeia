@@ -21,7 +21,7 @@ const HeaderDash = () => {
   }
 
   return (
-    <div className='flex bg-black justify-between items-center px-4 py-5 relative'>
+    <div className='flex border-b border-b-light justify-between items-center px-4 py-5 relative'>
     </div>
   )
 }

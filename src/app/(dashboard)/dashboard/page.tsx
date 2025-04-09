@@ -16,7 +16,7 @@ export default function Dashboard() {
     <main className="flex h-screen w-screen overflow-hidden">
       <AsideBar />
 
-      <div className="flex flex-col h-full w-full">
+      <div className="flex flex-col h-full w-full ">
         <HeaderDash />
 
         <div className="flex-grow bg-gray-100 p-4 overflow-y-auto">

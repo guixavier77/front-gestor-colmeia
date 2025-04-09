@@ -61,97 +61,101 @@ const TableDash: React.FC<TableProps> = ({
   }, [currentPage, filteredData])
 
   return (
-    <div className="relative flex flex-col gap-4">
+    <div className="relative flex flex-col gap-4 mt-10 h-[80%] justify-between">
 
-      <div className="flex justify-end">
+      <div>
+        <div className="flex justify-end mb-4">
 
-        <InputStyled 
-          id='search'
-          type='search'
-          styles='bg-white border-none shadow-lg '
-          icon={ <SearchIcon style={{color: colors.black}}/>}
-          onChange={(e) => {
-            setSearchTerm(e.target.value)
-            setCurrentPage(1) 
-          }}
-          placeholder='Buscar...'
-      
-        />
-      </div>
+          <InputStyled 
+            id='search'
+            type='search'
+            styles='border-gray bg-none '
+            stylesInput='bg-none'
+            icon={ <SearchIcon style={{color: colors.black}}/>}
+            onChange={(e) => {
+              setSearchTerm(e.target.value)
+              setCurrentPage(1) 
+            }}
+            placeholder='Buscar...'
+        
+          />
+        </div>
 
-      <TableContainer
-        component={Paper}
-        sx={{
-          ...sx,
-          boxShadow: 3,
-          borderRadius: '8px',
-          overflowX: 'auto',
-          maxHeight: 400,
-        }}
-      >
-        <MuiTable
+        <TableContainer
+          component={Paper}
           sx={{
-            minWidth: isFewColumns ? 500 : '100%',
-            tableLayout: 'auto',
+            ...sx,
+            boxShadow: 3,
+            borderRadius: '8px',
+            overflowX: 'auto',
+            maxHeight: 400,
           }}
         >
-          <TableHead>
-            <TableRow sx={{ backgroundColor: colors.black }}>
-              {columns.map((col, index) => (
-                <TableCell
-                  key={index}
+          <MuiTable
+            sx={{
+              minWidth: isFewColumns ? 500 : '100%',
+              tableLayout: 'auto',
+            }}
+          >
+            <TableHead>
+              <TableRow sx={{ backgroundColor: colors.black }}>
+                {columns.map((col, index) => (
+                  <TableCell
+                    key={index}
+                    sx={{
+                      fontWeight: 'bold',
+                      padding: isFewColumns ? '10px 16px' : '12px',
+                      color: '#FFFFFF',
+                      textAlign: 'left',
+                      fontSize: '16px'
+                    }}
+                  >
+                    {col.header}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {dataToDisplay.map((row) => (
+                <TableRow
+                  key={row[rowKey]}
+                  hover
+                  onClick={() => onRowClick?.(row)}
                   sx={{
-                    fontWeight: 'bold',
-                    padding: isFewColumns ? '10px 16px' : '12px',
-                    color: '#FFFFFF',
-                    textAlign: 'left',
-                    fontSize: '16px'
+                    cursor: onRowClick ? 'pointer' : 'default',
+                    '&:nth-of-type(even)': {
+                      backgroundColor: colors.gray,
+                    },
+                    '&:hover': {
+                      backgroundColor: '#EDEDED',
+                    },
                   }}
                 >
-                  {col.header}
-                </TableCell>
+                {columns.map((col, index) => {
+                    const value = row[col.field]
+                    return (
+                      <TableCell
+                        key={index}
+                        sx={{
+                          padding: isFewColumns ? '10px 16px' : '12px',
+                          color: '#1D1D1D',
+                          textAlign: 'left',
+                          whiteSpace: 'nowrap',
+                          fontWeight: 'light'
+                        }}
+                      >
+                        {col.render ? col.render(value, row) : value}
+                      </TableCell>
+                    )
+              })}
+                </TableRow>
               ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {dataToDisplay.map((row) => (
-              <TableRow
-                key={row[rowKey]}
-                hover
-                onClick={() => onRowClick?.(row)}
-                sx={{
-                  cursor: onRowClick ? 'pointer' : 'default',
-                  '&:nth-of-type(even)': {
-                    backgroundColor: colors.gray,
-                  },
-                  '&:hover': {
-                    backgroundColor: '#EDEDED',
-                  },
-                }}
-              >
-              {columns.map((col, index) => {
-                  const value = row[col.field]
-                  return (
-                    <TableCell
-                      key={index}
-                      sx={{
-                        padding: isFewColumns ? '10px 16px' : '12px',
-                        color: '#1D1D1D',
-                        textAlign: 'left',
-                        whiteSpace: 'nowrap',
-                        fontWeight: 'light'
-                      }}
-                    >
-                      {col.render ? col.render(value, row) : value}
-                    </TableCell>
-                  )
-            })}
-              </TableRow>
-            ))}
-    
-          </TableBody>
-        </MuiTable>
-      </TableContainer>
+      
+            </TableBody>
+          </MuiTable>
+        </TableContainer>
+
+      </div>
 
       {pagination && (
         <div className="flex justify-end mt-2 pr-4">

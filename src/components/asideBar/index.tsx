@@ -6,11 +6,17 @@ import { TABS_DASH } from '@/utils/types/tabs'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import GroupIcon from '@mui/icons-material/Group'
 import PersonIcon from '@mui/icons-material/Person'
+import MenuIcon from '@mui/icons-material/Menu'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Image from 'next/image'
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.png'
+import { colors } from '@/utils/colors/colors'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import LogoutIcon from '@mui/icons-material/Logout';
+
 const tabs = [
   {
     name: 'Dashboard',
@@ -28,6 +34,7 @@ const AsideBar = () => {
   const { user } = useContext(DefaultContext)
   const { tabDashSelected, setTabDashSelected } = useTab()
   const router = useRouter()
+  const [isCollapsed, setIsCollapsed] = useState(false)
 
   const handleLogout = () => {
     Cookies.remove('token')
@@ -35,68 +42,80 @@ const AsideBar = () => {
   }
 
   return (
-    <div className="flex flex-col bg-black h-screen justify-between shadow-xl w-64 pt-7">
+    <aside
+      className={`flex relative flex-col justify-between h-screen bg-black p-5 shadow-lg transition-all duration-300 ${
+        isCollapsed ? 'w-20' : 'w-64'
+      }`}
+    >
       <div>
+        <div className="absolute right-0 top-4 bg-primary rounded-l-xl ">
+          <button onClick={() => setIsCollapsed(!isCollapsed)}>
+            {isCollapsed ? (
+              <ChevronRightIcon style={{ color: '#FFFFFF' }} />
+            ) : (
+              <ChevronLeftIcon style={{ color: '#FFFFFF' }} />
+            )}
+          </button>
+        </div>
 
-      <div className='flex justify-center flex-col items-center'>
-        <Image src={logo} alt='Logo' width={100} height={100}/>
-        {/* <h1 className="flex flex-col justify-content-center text-2xl text-center text-white font-bold leading-5">
-          Rede<span className="text-2xl  text-primary">Apícola</span>
-        </h1> */}
-      </div>
-        <div className="flex flex-col justify-center mt-5 px-4 py-2">
+        <div className={`flex justify-center mb-6 ${isCollapsed ? 'mt-10' : ''}`}>
+          {<Image src={logo} alt="Logo" width={80} height={80} />}
+        </div>
+
+        <nav className="flex flex-col gap-2">
           {tabs.map(
             (tab) =>
               (tab.value !== TABS_DASH.STORE ||
                 user?.role === ROLE.SUPERADMIN) && (
                 <button
                   key={tab.value}
-                  className={`${tabDashSelected === tab.value ? 'bg-primary' : 'bg-none'} py-2 rounded-xl pl-2 flex gap-5 items-center mb-2 transition-colors duration-500 ease-in`}
                   onClick={() => setTabDashSelected(tab.value)}
+                  className={`flex items-center gap-3 px-4 py-2 rounded-xl transition-all duration-300 
+                  ${isCollapsed ? 'justify-center' : ''}
+                  ${
+                    tabDashSelected === tab.value
+                      ? 'bg-primary text-white'
+                      : 'text-white hover:bg-darkGray'
+                  }`}
                 >
                   {React.cloneElement(tab.icon, {
-                    style: {
-                      fontSize: 24,
-                      color: '#FFFFFF',
-                    },
+                    style: { fontSize: 24, color: '#FFFFFF' },
                   })}
-                  <p className="text-lg text-white font-normal">{tab.name}</p>
+                  {!isCollapsed && (
+                    <span className="text-base font-medium">{tab.name}</span>
+                  )}
                 </button>
               ),
           )}
-        </div>
+        </nav>
       </div>
 
-      <div className="">
-        <div className="flex flex-row px-3 gap-2 items-center self-start">
-          <div className="flex bg-white h-12 justify-center rounded-full w-12 items-center">
-            <PersonIcon
-              style={{
-                fontSize: 36,
-                color: '#FFCB08',
-              }}
-            />
+      <div>
+        <div className="flex items-center gap-3 mb-4">
+          <div className={`bg-white ${isCollapsed ?  'w-10 h-10' : 'w-12 h-12'} rounded-full flex items-center justify-center`}>
+            <PersonIcon style={{ fontSize: 30, color: colors.black }} />
           </div>
-
-          <div>
-            <p className="text-sm text-white font-bold">
-              {user?.name?.substring(0, 17)}
-            </p>
-            <p className="text-sm text-white font-light">
-              {ROLE_PTBR[user?.role || 0]}
-            </p>
-          </div>
+          {!isCollapsed && (
+            <div>
+              <p className="text-white text-sm font-semibold">
+                {user?.name?.substring(0, 17)}
+              </p>
+              <p className="text-white text-sm font-light">
+                {ROLE_PTBR[user?.role || 0]}
+              </p>
+            </div>
+          )}
         </div>
-
-        <div className="flex justify-center my-2">
-          <button onClick={handleLogout} className={`px-6 rounded-xl mb-2`}>
-            {/* <ExitToAppOutlined style={{ fontSize: 24 }} /> */}
-
-            <p className="text-lg text-white font-bold text-center">LOGOUT</p>
-          </button>
-        </div>
+        <button
+          onClick={handleLogout}
+          className={`w-full py-2 rounded-xl bg-[#363636] text-white text-sm font-semibold transition hover:bg-opacity-80 ${
+            isCollapsed ? 'text-center px-0' : ''
+          }`}
+        >
+          {isCollapsed ? <LogoutIcon/> : 'Logout'}
+        </button>
       </div>
-    </div>
+    </aside>
   )
 }
 
