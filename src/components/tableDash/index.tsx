@@ -39,8 +39,6 @@ const TableDash: React.FC<TableProps> = ({
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
 
-  const isFewColumns = columns.length <= 3
-
   const filteredData = useMemo(() => {
     if (!searchTerm) return data
     return data.filter((row) =>
@@ -59,7 +57,7 @@ const TableDash: React.FC<TableProps> = ({
   }, [currentPage, filteredData])
 
   return (
-    <div className="relative flex flex-col gap-4 mt-10 h-[80%] justify-between py-3">
+    <div className="relative flex flex-col gap-4 mt-10 h-[80%] justify-between py-3 w-full">
       <div>
         <div className="flex justify-end mb-4">
           <InputStyled
@@ -75,12 +73,17 @@ const TableDash: React.FC<TableProps> = ({
           />
         </div>
 
-
-        <div className="overflow-x-auto rounded-xl border border-gray shadow max-h-[400px]">
-          <TableContainer component={Paper} sx={{ ...sx, boxShadow: 'none', borderRadius: 0 }}>
+        <div className="">
+          <TableContainer
+            component={Paper}
+            sx={{
+              ...sx,
+              boxShadow: 'none',
+              borderRadius: 3,
+            }}
+          >
             <MuiTable
               sx={{
-                minWidth: isFewColumns ? 500 : '100%',
                 tableLayout: 'auto',
               }}
             >
@@ -90,12 +93,11 @@ const TableDash: React.FC<TableProps> = ({
                     <TableCell
                       key={index}
                       sx={{
-                        // fontWeight: 'bold',
-                        padding: isFewColumns ? '10px 16px' : '8px 10px',
+                        padding: '8px',
                         color: '#FFFFFF',
                         textAlign: 'left',
                         fontSize: '14px',
-                        whiteSpace: 'nowrap',
+                        
                       }}
                     >
                       {col.header}
@@ -125,12 +127,11 @@ const TableDash: React.FC<TableProps> = ({
                         <TableCell
                           key={index}
                           sx={{
-                            padding: isFewColumns ? '10px 16px' : '8px 10px',
+                            padding: '8px',
                             color: colors.black,
                             textAlign: 'left',
-                            whiteSpace: 'nowrap',
-                            fontWeight: 'light',
-                            fontSize: '14px'
+                            whiteSpace: 'wrap',
+                            fontSize: 12,
                           }}
                         >
                           {col.render ? col.render(value, row) : value}
@@ -143,6 +144,7 @@ const TableDash: React.FC<TableProps> = ({
             </MuiTable>
           </TableContainer>
         </div>
+      
       </div>
 
       {pagination && (
