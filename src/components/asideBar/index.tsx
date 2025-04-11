@@ -16,18 +16,24 @@ import logo from '../../assets/logo.png'
 import { colors } from '@/utils/colors/colors'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import MapIcon from '@mui/icons-material/Map';
+import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 const tabs = [
   {
-    name: 'Dashboard',
-    icon: <DashboardIcon />,
+    name: 'Estatisticas',
+    icon: <AutoGraphIcon />,
     value: TABS_DASH.DASH,
   },
   {
     name: 'Apicultores',
     icon: <GroupIcon />,
-    value: TABS_DASH.CUSTOMERS,
+    value: TABS_DASH.APICULTORES,
   },
+  {
+    name: 'Mapa',
+    icon: <MapIcon/>,
+    value: TABS_DASH.MAPA
+  }
 ]
 
 const AsideBar = () => {
@@ -65,8 +71,7 @@ const AsideBar = () => {
         <nav className="flex flex-col gap-2">
           {tabs.map(
             (tab) =>
-              (tab.value !== TABS_DASH.STORE ||
-                user?.role === ROLE.SUPERADMIN) && (
+              (
                 <button
                   key={tab.value}
                   onClick={() => setTabDashSelected(tab.value)}

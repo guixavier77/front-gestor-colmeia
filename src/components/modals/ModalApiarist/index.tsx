@@ -14,6 +14,10 @@ import { useContext, useEffect, useState } from 'react';
 import CustomizedSteppers from '../../StepBar';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import Apiarist from '@/interfaces/apiarist.interface';
+import LockIcon from '@mui/icons-material/Lock';
+import PasswordIcon from '@mui/icons-material/Password';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
+import { validateApiarist } from '../../../../formik/validators/validator-apiarist';
 
 interface ModalParams {
   open: boolean,
@@ -26,49 +30,9 @@ interface ModalParams {
 
 const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalParams) => {
   const { onShowFeedBack,user } = useContext(DefaultContext);
+  const [viewTwo, setViewTwo] = useState(false);
   const [loading, setloading] = useState(false);
   console.log(apiaristSelected);
-  const validate = (values: any) => {
-    const unmaskCpf = values.cpf.replace(/\D/g, "")
-    const unmaskPhone = values.phone.replace(/\D/g, "");
-    let errors: any = {};
-  
-    if (!values.latitude) {
-      errors.latitude = 'Este campo é necessário';
-    } else if (Number(values.latitude) < -90 || Number(values.latitude) > 90) {
-      errors.latitude = 'Latitude deve estar entre -90 e 90';
-    }
-  
-    if (!values.longitude) {
-      errors.longitude = 'Este campo é necessário';
-    } else if (Number(values.longitude) < -180 || Number(values.longitude) > 180) {
-      errors.longitude = 'Longitude deve estar entre -180 e 180';
-    }
-
-    if (!values.cpf) {
-      errors.cpf = 'Este campo é necessário';
-    } else if (masks.cpfMask(values.cpf).length < 14) {
-      errors.cpf = 'Informe o cpf completo';
-    } else if (!masks.validaCpf(unmaskCpf)) {
-      errors.cpf = 'CPF inválido';
-    }
-
-    console.log(values.phone);
-    if (!unmaskPhone) {
-      errors.phone = 'Este campo é necessário'
-    } else if (unmaskPhone < 11) {
-      errors.phone = 'Número inválido. Use o formato (11) 12345-6789'
-    }
-    
-  
-    if (!values.name) {
-      errors.name = "Este campo é necessário";
-    } else if (values.name.length < 4) {
-      errors.name = "Minimo 4 caracteres";
-    }
-
-    return errors;
-  }
 
 
   const onSuccess = () => {
@@ -94,9 +58,6 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
   };
   
 
-
-
-
   useEffect(() => {
     if (!open) return formik.resetForm();
 
@@ -105,8 +66,10 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
         cpf: '',
         name: '',
         phone: '',
+        email: '',
         latitude: '',
         longitude: '',
+        password: '',
         active: true,
       })
     }
@@ -117,7 +80,8 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
         phone,
         latitude,
         longitude,
-        active
+        active,
+        email,
       } = apiaristSelected;
       formik.setValues({
         name: name,
@@ -125,7 +89,10 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
         phone,
         latitude,
         longitude,
-        active
+        active, 
+        password: 'passfake',
+        email
+
       });
     }
   }, [apiaristSelected, open])
@@ -134,13 +101,15 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
   const formik = useFormik({
     initialValues: {
       cpf: '',
+      email: '',
       name: '',
       phone: '',
       latitude: '',
       longitude: '',
+      password: '',
       active: true,
     },
-    validate,
+    validate: validateApiarist,
     onSubmit: async (values) => {
       setloading(true);
 
@@ -151,13 +120,18 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
           name: values.name,
           latitude: values.latitude,
           longitude: values.longitude,
-          active: values.active
+          active: values.active,
+          email: values.email,
+          password: values.password,
           
         }
 
+   
+
       try {
         if (apiaristSelected) {
-          await api.put(`/apiarist/update/${apiaristSelected.id}`, data);
+          const {password, ...dataWithOutPassword} = data;
+          await api.put(`/apiarist/update/${apiaristSelected.id}`, dataWithOutPassword);
           onSuccessUpdate();
         } else {
           await api.post('/apiarist/create', data);
@@ -179,7 +153,7 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
   })
 
 
-  const steps = ['Dados do Apicultor'];
+  const steps = ['Dados do Apicultor', 'Dados do Login'];
 
   return (
     <Modal
@@ -187,147 +161,221 @@ const ModalApiarist = ({ open, setIsClose, apiaristSelected,loadData }: ModalPar
       onClose={setIsClose}
       className="flex justify-center items-center"
     >
-      <div className='bg-white rounded-20 px-5 py-4'>
+      <div className='bg-white rounded-20 px-5 py-4 w-[85%] max-w-[500px]'>
       <p className='font-semibold text-xl text-center uppercase pb-5'>{apiaristSelected ? "Atualizar Apicultor" : "Cadastro de Apicultor"}</p>
 
         <form className='flex flex-col gap-4' onSubmit={formik.handleSubmit}>
             <CustomizedSteppers 
               steps={steps}
-              activeTab={0}
+              activeTab={viewTwo ? 1 : 0}
               iconStep1={<PersonOutlineOutlined/>}
+              iconStep2={<LockIcon/>}
             />
 
-          
-            <div className='flex flex-col gap-4'>
-              <InputStyled
-                id="cpf"
-                onChange={formik.handleChange}
-                value={masks.cpfMask(formik.values.cpf)}
-                label="CPF"
-                type="tel"
-                placeholder="000.000.000-00"
-                icon={<ArticleOutlined style={{ color: colors.black }} />}
-                error={formik.errors.cpf}
-                onBlur={formik.handleBlur}
-                isTouched={formik.touched.cpf}
-              />
-              <InputStyled
-                id="name"
-                onChange={formik.handleChange}
-                value={formik.values.name}
-                label="Nome"
-                type="text"
-                placeholder="Exemplo"
-                icon={<PersonOutlineOutlined style={{ color: colors.black }} />}
-                error={formik.errors.name}
-                onBlur={formik.handleBlur}
-                isTouched={formik.touched.name}
-              />
-
-              <InputStyled
-                id="phone"
-                onChange={formik.handleChange}
-                value={masks.phoneMask(formik.values.phone)}
-                label="Telefone"
-                type="text"
-                placeholder="(00) 00000-0000"
-                icon={<LocalPhoneOutlined style={{ color: colors.black }} />}
-                maxLength={15}
-                error={formik.errors.phone}
-                onBlur={formik.handleBlur}
-                isTouched={formik.touched.phone}
-
-              />
-
-              <InputStyled
-                id="latitude"
-                onChange={formik.handleChange}
-                value={(formik.values.latitude)}
-                label="Latitude"
-                type="text"
-                placeholder=""
-                icon={<AddLocationIcon style={{ color: colors.black }} />}
-                error={formik.errors.latitude}
-                onBlur={formik.handleBlur}
-                isTouched={formik.touched.latitude}
-
-              />
-
-              <InputStyled
-                id="longitude"
-                onChange={formik.handleChange}
-                value={(formik.values.longitude)}
-                label="Longitude"
-                type="text"
-                placeholder=""
-                icon={<AddLocationIcon style={{ color: colors.black }} />}
-                error={formik.errors.longitude}
-                onBlur={formik.handleBlur}
-                isTouched={formik.touched.longitude}
-
-              />
-
-              <div className="flex flex-row gap-2 items-center">
-                <span className="text-black font-medium">Status:</span>
-                <div className="flex gap-4">
-                  {['Ativo', 'Inativo'].map((label) => {
-                    const isActive = label === 'Ativo'
-                    const selected = formik.values.active === isActive
-
-                    return (
-                      <label
-                        key={label}
-                        className={`px-4 py-1 rounded-40 cursor-pointer text-sm font-semibold transition-all border
-                          ${selected ? (isActive ? 'bg-green text-white border-green' : 'bg-red text-white border-red')
-                                    : 'bg-light text-black border-darkGray'}`}
-                      >
-                        <input
-                          type="radio"
-                          name="active"
-                          value={String(isActive)}
-                          checked={selected}
-                          onChange={() => formik.setFieldValue('active', isActive)}
-                          className="hidden"
-                        />
-                        {label}
-                      </label>
-                    )
-                  })}
-                </div>
-              </div>
-
-
-
-              <div className='flex gap-5 pt-5'>
-                <ButtonStyled
-                  type="button"
-                  onClick={setIsClose}
-                  styles="w-full"
-                  bgColor='bg-red'
-                  title="Cancelar"
+            {!viewTwo &&
+              <div className='flex flex-col gap-2'>
+                <InputStyled
+                  id="cpf"
+                  onChange={formik.handleChange}
+                  value={masks.cpfMask(formik.values.cpf)}
+                  label="CPF"
+                  type="tel"
+                  placeholder="000.000.000-00"
+                  icon={<ArticleOutlined style={{ color: colors.black }} />}
+                  error={formik.errors.cpf}
+                  onBlur={formik.handleBlur}
+                  isTouched={formik.touched.cpf}
                 />
-              
-              {loading ?
-                  <ButtonStyled
-                    bgColor='bg-darkGray'
-                    textColor='text-white'
-                    type="submit"
-                    styles="w-full"
-                    title='Cadastrando...'
-                    icon={<CircularProgress style={{ width: 20, height: 20, color: '#FFFFFF' }} />}
-  
-                  /> :
-                  <ButtonStyled
-                    type="submit"
-                    styles="w-full"
-                    title={apiaristSelected ? "Atualizar" : "Cadastrar"}
-                  />
-  
-                }
-              </div>
+                <InputStyled
+                  id="name"
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                  label="Nome"
+                  type="text"
+                  placeholder="Exemplo"
+                  icon={<PersonOutlineOutlined style={{ color: colors.black }} />}
+                  error={formik.errors.name}
+                  onBlur={formik.handleBlur}
+                  isTouched={formik.touched.name}
+                />
 
-              
-            </div>
+                <InputStyled
+                  id="phone"
+                  onChange={formik.handleChange}
+                  value={masks.phoneMask(formik.values.phone)}
+                  label="Telefone"
+                  type="text"
+                  placeholder="(00) 00000-0000"
+                  icon={<LocalPhoneOutlined style={{ color: colors.black }} />}
+                  maxLength={15}
+                  error={formik.errors.phone}
+                  onBlur={formik.handleBlur}
+                  isTouched={formik.touched.phone}
+
+                />
+
+                <InputStyled
+                  id="latitude"
+                  onChange={formik.handleChange}
+                  value={(formik.values.latitude)}
+                  label="Latitude"
+                  type="text"
+                  placeholder=""
+                  icon={<AddLocationIcon style={{ color: colors.black }} />}
+                  error={formik.errors.latitude}
+                  onBlur={formik.handleBlur}
+                  isTouched={formik.touched.latitude}
+
+                />
+
+
+                <InputStyled
+                  id="longitude"
+                  onChange={formik.handleChange}
+                  value={(formik.values.longitude)}
+                  label="Longitude"
+                  type="text"
+                  placeholder=""
+                  icon={<AddLocationIcon style={{ color: colors.black }} />}
+                  error={formik.errors.longitude}
+                  onBlur={formik.handleBlur}
+                  isTouched={formik.touched.longitude}
+
+                />
+
+
+
+                <div className='flex gap-5 pt-5'>
+                  <ButtonStyled
+                    type="button"
+                    onClick={setIsClose}
+                    styles="w-full"
+                    bgColor='bg-red'
+                    title="Cancelar"
+                  />
+                
+                {loading ?
+                    <ButtonStyled
+                      bgColor='bg-darkGray'
+                      textColor='text-white'
+                      type="submit"
+                      styles="w-full"
+                      title='Cadastrando...'
+                      icon={<CircularProgress style={{ width: 20, height: 20, color: '#FFFFFF' }} />}
+    
+                    /> :
+                    <ButtonStyled
+                      type="button"
+                      styles="w-full"
+                      title={'Próximo'}
+                      onClick={() => setViewTwo(true)}
+                    />
+    
+                  }
+                </div>
+
+                
+              </div>
+            }
+
+            {viewTwo &&
+              <div className='flex flex-col gap-2'>
+                <InputStyled
+                    id="email"
+                    onChange={formik.handleChange}
+                    value={(formik.values.email)}
+                    label="Email"
+                    type="text"
+                    placeholder=""
+                    icon={<ContactMailIcon style={{ color: colors.black }} />}
+                    error={formik.errors.email}
+                    onBlur={formik.handleBlur}
+                    isTouched={formik.touched.email}
+                    disabled={apiaristSelected ? true : false}
+
+
+                />
+                
+
+                <InputStyled
+                  id="password"
+                  onChange={formik.handleChange}
+                  value={(formik.values.password)}
+                  label="Senha"
+                  type="password"
+                  placeholder=""
+                  icon={<PasswordIcon style={{ color: colors.black }} />}
+                  error={formik.errors.password}
+                  onBlur={formik.handleBlur}
+                  isTouched={formik.touched.password}
+                  disabled={apiaristSelected ? true : false}
+
+                />
+
+        
+
+                <div className="flex flex-col gap-2 ">
+                  <span className="text-black font-medium">Status:</span>
+                  <div className="flex gap-4">
+                    {['Ativo', 'Inativo'].map((label) => {
+                      const isActive = label === 'Ativo'
+                      const selected = formik.values.active === isActive
+
+                      return (
+                        <label
+                          key={label}
+                          className={`px-4 py-1 rounded-40 cursor-pointer text-sm font-semibold transition-all border
+                            ${selected ? (isActive ? 'bg-green text-white border-green' : 'bg-red text-white border-red')
+                                      : 'bg-light text-black border-darkGray'}`}
+                        >
+                          <input
+                            type="radio"
+                            name="active"
+                            value={String(isActive)}
+                            checked={selected}
+                            onChange={() => formik.setFieldValue('active', isActive)}
+                            className="hidden"
+                          />
+                          {label}
+                        </label>
+                      )
+                    })}
+                  </div>
+                </div>
+
+
+
+                <div className='flex gap-5 pt-5'>
+                  <ButtonStyled
+                    type="button"
+                    onClick={() => setViewTwo(false)}
+                    styles="w-full"
+                    bgColor='bg-red'
+                    title="Cancelar"
+                  />
+
+                {loading ?
+                    <ButtonStyled
+                      bgColor='bg-darkGray'
+                      textColor='text-white'
+                      type="submit"
+                      styles="w-full"
+                      title='Cadastrando...'
+                      icon={<CircularProgress style={{ width: 20, height: 20, color: '#FFFFFF' }} />}
+
+                    /> :
+                    <ButtonStyled
+                      type="submit"
+                      styles="w-full"
+                      title={apiaristSelected ? "Atualizar" : "Próximo"}
+                    />
+
+                  }
+                </div>
+
+
+              </div>  
+            }
           
           
       

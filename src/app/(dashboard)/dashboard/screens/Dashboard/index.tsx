@@ -1,18 +1,6 @@
 import TopDash from '@/components/topDash'
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
-const rows = [
-  { id: 1, name: 'João', email: 'joao@example.com', cpf: '123.456.789-01', status: 'Ativo', points: 1200 },
-  { id: 2, name: 'Maria', email: 'maria@example.com', cpf: '987.654.321-00', status: 'Inativo', points: 900 },
-  { id: 3, name: 'Carlos', email: 'carlos@example.com', cpf: '112.233.445-66', status: 'Ativo', points: 1500 },
-  { id: 3, name: 'Carlos', email: 'carlos@example.com', cpf: '112.233.445-66', status: 'Ativo', points: 1500 },
-  { id: 3, name: 'Carlos', email: 'carlos@example.com', cpf: '112.233.445-66', status: 'Ativo', points: 1500 },
-]
-
-const columns = [
-  { header: 'Rank', field: 'rank' },
-  { header: 'Nome', field: 'name' },
-  { header: 'Pontos', field: 'totalPoints' },
-]
+import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 
 const DashboardContent = ({ hidden }: {hidden: boolean}) => {
   // const { data, loading } = useLoadDashboardTotals(hidden)
@@ -21,9 +9,9 @@ const DashboardContent = ({ hidden }: {hidden: boolean}) => {
   return (
     <div hidden={hidden} className="w-full">
       <TopDash
-        title="Dashboard"
+        title="Estatísticas"
         description="Veja as principais métricas e informações da loja e promoções."
-        icon={DashboardOutlinedIcon}
+        icon={InsertChartOutlinedIcon}
       />
 
       {/* <div className="grid grid-cols-4 gap-6">

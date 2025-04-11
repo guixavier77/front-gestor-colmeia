@@ -7,6 +7,7 @@ import CustomersContent from '@/app/(dashboard)/dashboard/screens/Apilcutores'
 import DashboardContent from '@/app/(dashboard)/dashboard/screens/Dashboard'
 import MenuMobile from '@/components/menuMobile'
 import { TABS_DASH } from '@/utils/types/tabs'
+import MapaApicultoresContent from './screens/MapaApilcutores'
 
 export default function Dashboard() {
   const { tabDashSelected } = useTab()
@@ -24,7 +25,8 @@ export default function Dashboard() {
     
           <div className="flex h-full justify-center w-full">
             <DashboardContent hidden={tabDashSelected !== TABS_DASH.DASH} />
-            <CustomersContent hidden={tabDashSelected !== TABS_DASH.CUSTOMERS} />
+            <CustomersContent hidden={tabDashSelected !== TABS_DASH.APICULTORES} />
+            <MapaApicultoresContent hidden={tabDashSelected !== TABS_DASH.MAPA} />
           </div>
         </div>
 

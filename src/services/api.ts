@@ -30,15 +30,9 @@ api.interceptors.response.use(
       ) {
         originalConfig._retry = true;
 
-        const oldToken = Cookies.get('token');
-
         try {
-          const refreshResponse = await api.post('refreshToken', {
-            token: oldToken,
-          });
-
+          const refreshResponse = await api.get('/users/refreshToken');
           const { token: newToken } = refreshResponse.data;
-
           Cookies.set('token', newToken, { expires: 30 });
 
           api.defaults.headers.common['Authorization'] = 'Bearer ' + newToken;

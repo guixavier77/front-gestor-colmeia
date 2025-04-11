@@ -6,5 +6,7 @@ export default interface Apiarist extends DefaultEntityType {
   phone: string;
   latitude: string,
   longitude: string
+  email: string
   active: boolean
+  password: string
 }
