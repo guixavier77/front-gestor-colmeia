@@ -22,7 +22,7 @@ const ApiaristAssociatesTable = ({ data }: { data: ApiaristStats }) => {
     },
 
     {
-      header: 'name',
+      header: 'Nome',
       field: 'name',
     },
     {
