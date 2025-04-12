@@ -110,12 +110,12 @@ export default function Login() {
               textColor="text-black"
             />
 
-            <ButtonStyled
+            {/* <ButtonStyled
               type="button"
               onClick={() => router.push('/register')}
               styles="w-full"
               title="Cadastre-se"
-            />
+            /> */}
           </div>
         </>
       )}

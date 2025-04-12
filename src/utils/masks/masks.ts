@@ -67,6 +67,7 @@ export default {
 
   validaCpf: (cpf: string) => {
     cpf = cpf.replace(/[^\d]+/g, '');
+    console.log(cpf);
     if (cpf == '') return false;
     // Elimina CPFs invalidos conhecidos	
     if (cpf.length != 11 ||

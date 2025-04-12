@@ -1,14 +1,15 @@
-import BusinessIcon from '@mui/icons-material/Business';
-import StoreIcon from '@mui/icons-material/Store';
-import Stack from '@mui/material/Stack';
-import Step from '@mui/material/Step';
-import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
-import { StepIconProps } from '@mui/material/StepIcon';
-import StepLabel from '@mui/material/StepLabel';
-import Stepper from '@mui/material/Stepper';
-import { styled } from '@mui/material/styles';
-import * as React from 'react';
-
+import BusinessIcon from '@mui/icons-material/Business'
+import StoreIcon from '@mui/icons-material/Store'
+import Stack from '@mui/material/Stack'
+import Step from '@mui/material/Step'
+import StepConnector, {
+  stepConnectorClasses,
+} from '@mui/material/StepConnector'
+import { StepIconProps } from '@mui/material/StepIcon'
+import StepLabel from '@mui/material/StepLabel'
+import Stepper from '@mui/material/Stepper'
+import { styled } from '@mui/material/styles'
+import * as React from 'react'
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -17,13 +18,13 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       backgroundImage:
-        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+        'linear-gradient(95deg, #FFE500 0%, #D4B200 50%, #1D1D1D 100%)',
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       backgroundImage:
-        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+        'linear-gradient(95deg, #FFE500 0%, #D4B200 50%, #1D1D1D 100%)',
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
@@ -31,14 +32,14 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     border: 0,
     backgroundColor: '#eaeaf0',
     borderRadius: 1,
-    ...theme.applyStyles('dark', {
+    ...theme.applyStyles?.('dark', {
       backgroundColor: theme.palette.grey[800],
     }),
   },
-}));
+}))
 
 const ColorlibStepIconRoot = styled('div')<{
-  ownerState: { completed?: boolean; active?: boolean };
+  ownerState: { completed?: boolean; active?: boolean }
 }>(({ theme }) => ({
   backgroundColor: '#6D6D6D',
   zIndex: 1,
@@ -66,43 +67,57 @@ const ColorlibStepIconRoot = styled('div')<{
       style: {
         backgroundImage:
           'linear-gradient( 136deg, #FFCB08 0%, #FFCB08 50%, #1D1D1D 100%)',
-
       },
     },
   ],
-}));
+}))
 
-function ColorlibStepIcon(props: StepIconProps & { icons: { [index: string]: React.ReactElement<any> } }) {
-  const { active, completed, className,icons } = props;
-
-
+function ColorlibStepIcon(
+  props: StepIconProps & {
+    icons: { [index: string]: React.ReactElement<any> }
+  },
+) {
+  const { active, completed, className, icons } = props
 
   return (
-    <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
+    <ColorlibStepIconRoot
+      ownerState={{ completed, active }}
+      className={className}
+    >
       {icons[String(props.icon)]}
     </ColorlibStepIconRoot>
-  );
+  )
 }
 
-
-export default function CustomizedSteppers({steps, activeTab, iconStep1, iconStep2}: any) {
+export default function CustomizedSteppers({
+  steps,
+  activeTab,
+  iconStep1,
+  iconStep2,
+}: any) {
   const icons = {
     1: iconStep1,
     2: iconStep2,
-  };
+  }
   return (
     <Stack>
-      <Stepper alternativeLabel activeStep={activeTab} connector={<ColorlibConnector />}>
+      <Stepper
+        alternativeLabel
+        activeStep={activeTab}
+        connector={<ColorlibConnector />}
+      >
         {steps.map((label: any) => (
           <Step key={label}>
-           <StepLabel 
-              StepIconComponent={(props) => <ColorlibStepIcon {...props} icons={icons} />}
+            <StepLabel
+              StepIconComponent={(props) => (
+                <ColorlibStepIcon {...props} icons={icons} />
+              )}
             >
-              <p className='font-bold text-base'>{label}</p>
+              <p className="font-bold text-base">{label}</p>
             </StepLabel>
           </Step>
         ))}
       </Stepper>
     </Stack>
-  );
+  )
 }

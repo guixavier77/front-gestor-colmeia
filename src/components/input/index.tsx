@@ -32,7 +32,7 @@ const InputStyled = ({maxLength,disabled, label, type, icon, placeholder, value,
             value={value} 
             onChange={onChange} 
             type={type} 
-            className={`${disabled ? '' : ''} ${stylesInput ? stylesInput : ''} outline-none text-black font-semibold bg-white`}
+            className={`${disabled ? 'bg-gray' : 'bg-white'} ${stylesInput ? stylesInput : ''} outline-none text-black font-semibold `}
             placeholder={placeholder} 
             onBlur={onBlur}
             
@@ -46,7 +46,7 @@ const InputStyled = ({maxLength,disabled, label, type, icon, placeholder, value,
 
       </div>
       {error && isTouched &&
-        <p className='font-light text-red text-base pt-1 text-center'>{error}</p>
+        <p className='font-light text-red text-sm pt-1 text-center'>{error}</p>
       }
     </div>
   )

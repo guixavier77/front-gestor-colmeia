@@ -23,7 +23,7 @@ const tabs = [
   {
     name: 'Apicultores',
     icon: GroupIcon,
-    value: TABS_DASH.CUSTOMERS,
+    value: TABS_DASH.APICULTORES,
   },
 ]
 
@@ -54,8 +54,7 @@ export default function MenuMobile() {
         <div className="fixed top-12 left-0 w-full bg-black shadow-md flex justify-around items-center py-3 md:hidden z-40 border-b border-darkGray flex-col gap-4">
           {tabs.map(
             (tab) =>
-              (tab.value !== TABS_DASH.STORE ||
-                user?.role === ROLE.SUPERADMIN) && (
+              (
                 <button
                   key={tab.value}
                   onClick={() => {

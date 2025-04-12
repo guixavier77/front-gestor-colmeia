@@ -7,8 +7,8 @@ import { BottomNavigation } from '@mui/material'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'RedeApícola',
-  description: 'Sua fidelidade digital',
+  title: 'Rede Apícola',
+  description: 'Gestão de Agricultores',
 }
 
 export default function RootLayout({
