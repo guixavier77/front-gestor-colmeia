@@ -13,20 +13,23 @@ export default function Dashboard() {
   const { tabDashSelected } = useTab()
 
   return (
-    <main className="flex h-screen w-screen">
+    <main className="flex h-screen w-screen ">
       <div className="s:hidden">
         <AsideBar />
       </div>
 
-      <div className="flex flex-col h-full w-full">
+      <div className="flex flex-col h-full w-full ">
         <HeaderDash />
 
-        <div className="flex-grow bg-gray-100 p-4 pb-20 md:pb-0">
-    
+        <div className="flex-grow bg-gray-100 p-4  mb-10 md:pb-0 overflow-auto scroll-custom">
           <div className="flex h-full justify-center w-full">
             <DashboardContent hidden={tabDashSelected !== TABS_DASH.DASH} />
-            <CustomersContent hidden={tabDashSelected !== TABS_DASH.APICULTORES} />
-            <MapaApicultoresContent hidden={tabDashSelected !== TABS_DASH.MAPA} />
+            <CustomersContent
+              hidden={tabDashSelected !== TABS_DASH.APICULTORES}
+            />
+            <MapaApicultoresContent
+              hidden={tabDashSelected !== TABS_DASH.MAPA}
+            />
           </div>
         </div>
 
@@ -34,7 +37,7 @@ export default function Dashboard() {
           <FooterDash />
         </div>
 
-        <div className='t:hidden d:hidden'>
+        <div className="t:hidden d:hidden">
           <MenuMobile />
         </div>
       </div>

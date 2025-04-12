@@ -1,68 +1,50 @@
+import ApiaristAssociatesTable from '@/components/apiaristAssociatesTables'
+import ApiaristSummaryTable from '@/components/apiaristSummary'
+import CardDash from '@/components/cardDash'
+import GraphicApiaristStats from '@/components/graphicApiaristStats'
 import TopDash from '@/components/topDash'
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
-import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
+import useLoadApiaristLatest from '@/hooks/useLoadApiaristsLatest'
+import useLoadApiaristStats from '@/hooks/useLoadApiaristsStats'
+import useLoadApiaristStatsByPeriod from '@/hooks/useLoadApiaristsStatsByPeriod'
+import Group from '@mui/icons-material/Group'
+import GroupOffIcon from '@mui/icons-material/GroupRemove'
+import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined'
 
-const DashboardContent = ({ hidden }: {hidden: boolean}) => {
-  // const { data, loading } = useLoadDashboardTotals(hidden)
-  // const theme = useTheme() 
-  
+const DashboardContent = ({ hidden }: { hidden: boolean }) => {
+  const { data, loading } = useLoadApiaristStats(hidden)
+  const { data: apiaristStats, loading: loadingStats } =
+    useLoadApiaristStatsByPeriod(hidden)
+  const { data: apiaristLatest, loading: loadingLatest } =
+    useLoadApiaristLatest(hidden)
+
   return (
-    <div hidden={hidden} className="w-full">
+    <div hidden={hidden} className="w-full px-4 md:px-6">
       <TopDash
         title="Estatísticas"
-        description="Veja as principais métricas e informações da loja e promoções."
+        description="Veja as principais métricas e informações dos apicultores associados."
         icon={InsertChartOutlinedIcon}
       />
 
-      {/* <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
         <CardDash
           icon={<Group />}
-          title="Clientes"
-          value={data?.totalClients ?? 0}
+          title="Associados"
+          value={data?.totalAssociates ?? 0}
         />
         <CardDash
-          icon={<PaidIcon />}
-          title="Promoções Ativas"
-          value={data?.totalPromotionsActive ?? 0}
-        />
-        <CardDash
-          icon={<PaidOutlinedIcon />}
-          title="Promoções Finalizadas"
-          value={data?.totalPromotionsInactive ?? 0}
-        />
-        <CardDash
-          icon={<EmojiEvents />}
-          title="Resgates Pendentes"
-          value={12}
+          icon={<GroupOffIcon />}
+          title="Desassociados"
+          value={data?.totalDisassociated ?? 0}
         />
       </div>
 
-      <div className="mt-6 grid grid-cols-12 gap-6">
-        <div className="col-span-9 flex flex-col gap-6"> 
-          <div className="w-full">
-            <GraphicPromotions data={data?.topPromotions ?? []}/>
-          </div>
-          <div className="w-full mt-2">
-            <GraphicRewards />
-          </div>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-10">
+        <div className="bg-white p-4 rounded-xl shadow-md">
+          <GraphicApiaristStats data={apiaristStats} />
         </div>
+      </div>
 
-        <div className="col-span-3 flex flex-col gap-6">
-          <div className="w-full">
-            <p className="text-black text-2xl font-bold uppercase mb-2">Top Clientes</p>
-            <TableDash columns={columns} data={data?.topClients ?? []} rowKey="id" />
-          </div>
-
-          <div className="w-full">
-            <p className="text-black text-2xl font-bold uppercase mb-2">Top Operadores</p>
-            <TableDash columns={columns} data={data?.topOperators ?? []} rowKey="id" />
-          </div>
-        </div>
-      </div> */}
-
-
-
-
+      <ApiaristAssociatesTable data={apiaristLatest} />
     </div>
   )
 }

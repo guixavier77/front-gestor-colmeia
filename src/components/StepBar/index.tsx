@@ -17,12 +17,14 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      backgroundImage: 'linear-gradient(95deg, #FFE500 0%, #FFE500 100%)',
+      backgroundImage:
+        'linear-gradient(95deg, #FFE500 0%, #D4B200 50%, #1D1D1D 100%)',
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      backgroundImage: 'linear-gradient(95deg, #FFE500 0%, #FFE500 100%)',
+      backgroundImage:
+        'linear-gradient(95deg, #FFE500 0%, #D4B200 50%, #1D1D1D 100%)',
     },
   },
   [`& .${stepConnectorClasses.line}`]: {

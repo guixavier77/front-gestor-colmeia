@@ -14,10 +14,10 @@ import React, { useContext, useState } from 'react'
 import Image from 'next/image'
 import logo from '../../assets/logo.png'
 import { colors } from '@/utils/colors/colors'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import LogoutIcon from '@mui/icons-material/Logout';
-import MapIcon from '@mui/icons-material/Map';
-import AutoGraphIcon from '@mui/icons-material/AutoGraph';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import LogoutIcon from '@mui/icons-material/Logout'
+import MapIcon from '@mui/icons-material/Map'
+import AutoGraphIcon from '@mui/icons-material/AutoGraph'
 const tabs = [
   {
     name: 'Estatisticas',
@@ -31,9 +31,9 @@ const tabs = [
   },
   {
     name: 'Mapa',
-    icon: <MapIcon/>,
-    value: TABS_DASH.MAPA
-  }
+    icon: <MapIcon />,
+    value: TABS_DASH.MAPA,
+  },
 ]
 
 const AsideBar = () => {
@@ -49,7 +49,7 @@ const AsideBar = () => {
 
   return (
     <aside
-      className={`flex relative flex-col justify-between h-screen bg-black p-5 shadow-lg transition-all duration-300 ${
+      className={`flex relative flex-col justify-between h-screen  bg-black p-5 shadow-lg transition-all duration-300 ${
         isCollapsed ? 'w-20' : 'w-56'
       }`}
     >
@@ -64,40 +64,41 @@ const AsideBar = () => {
           </button>
         </div>
 
-        <div className={`flex justify-center mb-6 ${isCollapsed ? 'mt-10' : ''}`}>
+        <div
+          className={`flex justify-center mb-6 ${isCollapsed ? 'mt-10' : ''}`}
+        >
           {<Image src={logo} alt="Logo" width={80} height={80} />}
         </div>
 
         <nav className="flex flex-col gap-2">
-          {tabs.map(
-            (tab) =>
-              (
-                <button
-                  key={tab.value}
-                  onClick={() => setTabDashSelected(tab.value)}
-                  className={`flex items-center gap-3 px-4 py-2 rounded-xl transition-all duration-300 
+          {tabs.map((tab) => (
+            <button
+              key={tab.value}
+              onClick={() => setTabDashSelected(tab.value)}
+              className={`flex items-center gap-3 px-4 py-2 rounded-xl transition-all duration-300 
                   ${isCollapsed ? 'justify-center' : ''}
                   ${
                     tabDashSelected === tab.value
                       ? 'bg-primary text-white'
                       : 'text-white hover:bg-darkGray'
                   }`}
-                >
-                  {React.cloneElement(tab.icon, {
-                    style: { fontSize: 24, color: '#FFFFFF' },
-                  })}
-                  {!isCollapsed && (
-                    <span className="text-base font-medium">{tab.name}</span>
-                  )}
-                </button>
-              ),
-          )}
+            >
+              {React.cloneElement(tab.icon, {
+                style: { fontSize: 24, color: '#FFFFFF' },
+              })}
+              {!isCollapsed && (
+                <span className="text-base font-medium">{tab.name}</span>
+              )}
+            </button>
+          ))}
         </nav>
       </div>
 
       <div>
         <div className="flex items-center gap-3 mb-4">
-          <div className={`bg-white ${isCollapsed ?  'w-10 h-10' : 'w-12 h-12'} rounded-full flex items-center justify-center`}>
+          <div
+            className={`bg-white ${isCollapsed ? 'w-10 h-10' : 'w-12 h-12'} rounded-full flex items-center justify-center`}
+          >
             <PersonIcon style={{ fontSize: 30, color: colors.black }} />
           </div>
           {!isCollapsed && (
@@ -117,7 +118,7 @@ const AsideBar = () => {
             isCollapsed ? 'text-center px-0' : ''
           }`}
         >
-          {isCollapsed ? <LogoutIcon/> : 'Logout'}
+          {isCollapsed ? <LogoutIcon /> : 'Logout'}
         </button>
       </div>
     </aside>

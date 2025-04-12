@@ -25,6 +25,7 @@ interface TableProps {
   sx?: object
   pagination?: boolean
   itemsPerPage?: number
+  search?: boolean
 }
 
 const TableDash: React.FC<TableProps> = ({
@@ -35,6 +36,7 @@ const TableDash: React.FC<TableProps> = ({
   sx,
   pagination = true,
   itemsPerPage = 10,
+  search = true,
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
@@ -43,8 +45,8 @@ const TableDash: React.FC<TableProps> = ({
     if (!searchTerm) return data
     return data.filter((row) =>
       columns.some((col) =>
-        String(row[col.field]).toLowerCase().includes(searchTerm.toLowerCase())
-      )
+        String(row[col.field]).toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
     )
   }, [data, columns, searchTerm])
 
@@ -59,19 +61,21 @@ const TableDash: React.FC<TableProps> = ({
   return (
     <div className="relative flex flex-col gap-4 mt-10 h-[80%] justify-between py-3 w-full">
       <div>
-        <div className="flex justify-end mb-4">
-          <InputStyled
-            id="search"
-            type="search"
-            styles="border-gray bg-white shadow"
-            icon={<SearchIcon style={{ color: colors.black }} />}
-            onChange={(e) => {
-              setSearchTerm(e.target.value)
-              setCurrentPage(1)
-            }}
-            placeholder="Buscar..."
-          />
-        </div>
+        {search && (
+          <div className="flex justify-end mb-4">
+            <InputStyled
+              id="search"
+              type="search"
+              styles="border-gray bg-white shadow"
+              icon={<SearchIcon style={{ color: colors.black }} />}
+              onChange={(e) => {
+                setSearchTerm(e.target.value)
+                setCurrentPage(1)
+              }}
+              placeholder="Buscar..."
+            />
+          </div>
+        )}
 
         <div className="">
           <TableContainer
@@ -97,7 +101,6 @@ const TableDash: React.FC<TableProps> = ({
                         color: '#FFFFFF',
                         textAlign: 'left',
                         fontSize: '14px',
-                        
                       }}
                     >
                       {col.header}
@@ -144,7 +147,6 @@ const TableDash: React.FC<TableProps> = ({
             </MuiTable>
           </TableContainer>
         </div>
-      
       </div>
 
       {pagination && (

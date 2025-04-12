@@ -1,12 +1,11 @@
-
 import { Providers } from '@/contexts/providers/provider'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
-  title: 'RedeApícola',
-  description: 'Sua fidelidade digital',
+  title: 'Rede Apícola',
+  description: 'Gestão de Apicultores',
 }
 export default function RootLayout({
   children,
@@ -16,9 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-light`}>
-        <Providers>
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
