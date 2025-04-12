@@ -13,11 +13,12 @@ import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
 import logoimg from '../../assets/logo.png'
+import AutoGraph from '@mui/icons-material/AutoGraph'
 
 const tabs = [
   {
-    name: 'Dashboard',
-    icon: DashboardIcon,
+    name: 'Estatísticas',
+    icon: AutoGraph,
     value: TABS_DASH.DASH,
   },
   {
@@ -40,36 +41,35 @@ export default function MenuMobile() {
 
   return (
     <>
-
       <div className="fixed top-0 left-0 w-full bg-black px-4 py-2 flex justify-between items-center md:hidden z-50 shadow-lg border-b border-darkGray">
         {<Image src={logoimg} alt="Logo" width={30} height={30} />}
         <div />
         <button onClick={() => setIsOpen(!isOpen)} className="text-white">
-          {isOpen ? <CloseIcon style={{fontSize: 30}}/> : <MenuIcon style={{fontSize: 30}}/>}
+          {isOpen ? (
+            <CloseIcon style={{ fontSize: 30 }} />
+          ) : (
+            <MenuIcon style={{ fontSize: 30 }} />
+          )}
         </button>
       </div>
 
-
       {isOpen && (
         <div className="fixed top-12 left-0 w-full bg-black shadow-md flex justify-around items-center py-3 md:hidden z-40 border-b border-darkGray flex-col gap-4">
-          {tabs.map(
-            (tab) =>
-              (
-                <button
-                  key={tab.value}
-                  onClick={() => {
-                    setTabDashSelected(tab.value)
-                    setIsOpen(false)
-                  }}
-                  className={`flex flex-row gap-4 items-center justify-center text-sm  hover:text-primary ${
-                    tabDashSelected === tab.value ? 'text-primary' : 'text-light'
-                  }`}
-                >
-                  <tab.icon style={{ fontSize: 24 }} />
-                  {tab.name}
-                </button>
-              )
-          )}
+          {tabs.map((tab) => (
+            <button
+              key={tab.value}
+              onClick={() => {
+                setTabDashSelected(tab.value)
+                setIsOpen(false)
+              }}
+              className={`flex flex-row gap-4 items-center justify-center text-sm  hover:text-primary ${
+                tabDashSelected === tab.value ? 'text-primary' : 'text-light'
+              }`}
+            >
+              <tab.icon style={{ fontSize: 24 }} />
+              {tab.name}
+            </button>
+          ))}
 
           <button
             onClick={handleLogout}
