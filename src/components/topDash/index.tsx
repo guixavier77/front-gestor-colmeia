@@ -20,7 +20,7 @@ const TopDash = ({
   return (
     <div className="flex mb-4 items-center justify-between flex-wrap gap-4">
       <div className="flex items-center ">
-        <div className="flex justify-center items-center bg-primary  p-2 rounded-xl mr-4">
+        <div className="flex justify-center items-center bg-primary  p-2 rounded-xl mr-4 shadow-lg">
           <Icon style={{ color: colors.white, fontSize: 48 }} />
         </div>
 
@@ -38,7 +38,7 @@ const TopDash = ({
           icon={<AddIcon style={{ color: colors.primary, fontSize: 24 }} />}
           onClick={onClick}
           type="button"
-          styles="px-4 text-sm h-12 "
+          styles="px-4 text-sm h-12 shadow-lg"
         />
       )}
     </div>

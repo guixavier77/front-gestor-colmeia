@@ -9,10 +9,11 @@ const config: Config = {
   ],
   theme: {
     borderRadius: {
+      '3': '3px',
       '40': '40px',
-      'full': '100%',
+      full: '100%',
       '20': '20px',
-      'xl': '12px',
+      xl: '12px',
     },
     screens: {
       d: '1140px',
@@ -27,10 +28,8 @@ const config: Config = {
       gray: '#D9D9D9',
       darkGray: '#6D6D6D',
       light: '#EDEDED',
-      green: '#219F02'
+      green: '#219F02',
     },
-    
-
   },
   plugins: [],
 }
