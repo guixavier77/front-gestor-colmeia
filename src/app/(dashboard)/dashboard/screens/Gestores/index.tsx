@@ -28,13 +28,12 @@ const GestoresContent = ({ hidden }: any) => {
 
   const toggleModalOpen = useCallback(() => {
     setOpenModal(!openModal)
-    setDataSelected(null)
   }, [openModal])
 
   const toogleModalOpenWithData = useCallback(
     (row: User) => {
       setDataSelected(row)
-      toggleModalOpen()
+      setOpenModal(true)
     },
     [toggleModalOpen],
   )

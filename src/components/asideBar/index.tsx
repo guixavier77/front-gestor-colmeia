@@ -11,7 +11,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import logo from '../../assets/logo.png'
 
 const AsideBar = () => {
@@ -24,6 +24,14 @@ const AsideBar = () => {
     Cookies.remove('token')
     router.push('/login')
   }
+
+  const visibleTabs = useMemo(() => {
+    return dashboardTabs.filter((tab) => {
+      const userRole = user?.role || ''
+      if (tab.hide?.includes(userRole)) return false
+      return true
+    })
+  }, [user?.role, dashboardTabs])
 
   return (
     <aside
@@ -49,7 +57,7 @@ const AsideBar = () => {
         </div>
 
         <nav className="flex flex-col gap-2">
-          {dashboardTabs.map((tab) => (
+          {visibleTabs.map((tab) => (
             <button
               key={tab.value}
               onClick={() => setTabDashSelected(tab.value)}

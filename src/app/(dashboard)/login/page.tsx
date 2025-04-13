@@ -1,6 +1,5 @@
 'use client'
 
-
 import api from '@/services/api'
 import { ROLE } from '@/utils/types/roles'
 import Cookies from 'js-cookie'
@@ -58,11 +57,12 @@ export default function Login() {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="bg-white s:w-screen t:w-3/6 d:w-2/6 mx-auto flex flex-col justify-evenly p-4 h-screen  "
+      className="w-screen h-screen flex justify-center items-center"
     >
+      <div></div>
       {loading && <Loading text="Autenticando..." />}
       {!loading && (
-        <>
+        <div className="d:w-2/6 t:w-3/6 s:w-[90%] flex flex-col justify-evenly p-6 bg-white shadow-lg rounded-xl gap-6">
           <div>
             <Logo />
           </div>
@@ -105,9 +105,10 @@ export default function Login() {
             <ButtonStyled
               type="submit"
               styles="w-full"
-              bgColor="bg-primary"
+              bgColor="bg-black"
               title="Entrar"
-              textColor="text-black"
+              textColor="text-white"
+              disabled={loading}
             />
 
             {/* <ButtonStyled
@@ -117,7 +118,7 @@ export default function Login() {
               title="Cadastre-se"
             /> */}
           </div>
-        </>
+        </div>
       )}
     </form>
   )

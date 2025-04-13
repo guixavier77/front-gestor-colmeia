@@ -20,6 +20,7 @@ export const dashboardTabs = [
     name: 'Gestores',
     icon: <AdminPanelSettingsIcon />,
     value: TABS_DASH.GESTORES,
+    hide: ['admin'],
   },
   {
     name: 'Apicultores',

@@ -9,9 +9,14 @@ import MenuMobile from '@/components/menuMobile'
 import MapaApicultoresContent from './screens/MapaApilcutores'
 import GestoresContent from './screens/Gestores'
 import { TABS_DASH } from '@/constants/dashboardTabs'
+import { useContext } from 'react'
+import { DefaultContext } from '@/contexts/defaultContext'
 
 export default function Dashboard() {
+  const { user } = useContext(DefaultContext)
   const { tabDashSelected } = useTab()
+
+  if (!user) return null
 
   return (
     <main className="flex h-screen w-screen ">

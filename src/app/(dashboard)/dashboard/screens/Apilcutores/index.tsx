@@ -29,7 +29,7 @@ const ApicultoresContent = ({ hidden }: any) => {
   const toogleModalOpenWithData = useCallback(
     (row: Apiarist) => {
       setDataSelected(row)
-      toggleModalOpen()
+      setOpenModal(true)
     },
     [toggleModalOpen],
   )
@@ -100,6 +100,7 @@ const ApicultoresContent = ({ hidden }: any) => {
           description={`Gerenciamento dos apicultores, com dados de produção,\n\n apiários e status das colônias.`}
           icon={GroupOutlinedIcon}
           onClick={toggleModalOpen}
+          textBtn="Novo Apicultor"
         />
 
         {loading ? (
