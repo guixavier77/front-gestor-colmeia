@@ -6,11 +6,17 @@ import { useTab } from '@/contexts/tabContext'
 import CustomersContent from '@/app/(dashboard)/dashboard/screens/Apilcutores'
 import DashboardContent from '@/app/(dashboard)/dashboard/screens/Dashboard'
 import MenuMobile from '@/components/menuMobile'
-import { TABS_DASH } from '@/utils/types/tabs'
 import MapaApicultoresContent from './screens/MapaApilcutores'
+import GestoresContent from './screens/Gestores'
+import { TABS_DASH } from '@/constants/dashboardTabs'
+import { useContext } from 'react'
+import { DefaultContext } from '@/contexts/defaultContext'
 
 export default function Dashboard() {
+  const { user } = useContext(DefaultContext)
   const { tabDashSelected } = useTab()
+
+  if (!user) return null
 
   return (
     <main className="flex h-screen w-screen ">
@@ -30,6 +36,8 @@ export default function Dashboard() {
             <MapaApicultoresContent
               hidden={tabDashSelected !== TABS_DASH.MAPA}
             />
+
+            <GestoresContent hidden={tabDashSelected !== TABS_DASH.GESTORES} />
           </div>
         </div>
 
