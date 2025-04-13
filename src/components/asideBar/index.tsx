@@ -1,40 +1,18 @@
 'use client'
+import { dashboardTabs } from '@/constants/dashboardTabs'
 import { DefaultContext } from '@/contexts/defaultContext'
 import { useTab } from '@/contexts/tabContext'
-import { ROLE, ROLE_PTBR } from '@/utils/types/roles'
-import { TABS_DASH } from '@/utils/types/tabs'
-import DashboardIcon from '@mui/icons-material/Dashboard'
-import GroupIcon from '@mui/icons-material/Group'
-import PersonIcon from '@mui/icons-material/Person'
-import MenuIcon from '@mui/icons-material/Menu'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import Cookies from 'js-cookie'
-import { useRouter } from 'next/navigation'
-import React, { useContext, useState } from 'react'
-import Image from 'next/image'
-import logo from '../../assets/logo.png'
 import { colors } from '@/utils/colors/colors'
+import { ROLE_PTBR } from '@/utils/types/roles'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import LogoutIcon from '@mui/icons-material/Logout'
-import MapIcon from '@mui/icons-material/Map'
-import AutoGraphIcon from '@mui/icons-material/AutoGraph'
-const tabs = [
-  {
-    name: 'Estatisticas',
-    icon: <AutoGraphIcon />,
-    value: TABS_DASH.DASH,
-  },
-  {
-    name: 'Apicultores',
-    icon: <GroupIcon />,
-    value: TABS_DASH.APICULTORES,
-  },
-  {
-    name: 'Mapa',
-    icon: <MapIcon />,
-    value: TABS_DASH.MAPA,
-  },
-]
+import PersonIcon from '@mui/icons-material/Person'
+import Cookies from 'js-cookie'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import React, { useContext, useState } from 'react'
+import logo from '../../assets/logo.png'
 
 const AsideBar = () => {
   const { user } = useContext(DefaultContext)
@@ -71,7 +49,7 @@ const AsideBar = () => {
         </div>
 
         <nav className="flex flex-col gap-2">
-          {tabs.map((tab) => (
+          {dashboardTabs.map((tab) => (
             <button
               key={tab.value}
               onClick={() => setTabDashSelected(tab.value)}

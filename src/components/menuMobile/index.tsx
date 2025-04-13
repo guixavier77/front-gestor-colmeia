@@ -1,5 +1,5 @@
 'use client'
-import { useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { useTab } from '@/contexts/tabContext'
 import { DefaultContext } from '@/contexts/defaultContext'
 import { TABS_DASH } from '@/utils/types/tabs'
@@ -14,6 +14,7 @@ import Cookies from 'js-cookie'
 import Image from 'next/image'
 import logoimg from '../../assets/logo.png'
 import AutoGraph from '@mui/icons-material/AutoGraph'
+import { dashboardTabs } from '@/constants/dashboardTabs'
 
 const tabs = [
   {
@@ -55,7 +56,7 @@ export default function MenuMobile() {
 
       {isOpen && (
         <div className="fixed top-12 left-0 w-full bg-black shadow-md flex justify-around items-center py-3 md:hidden z-40 border-b border-darkGray flex-col gap-4">
-          {tabs.map((tab) => (
+          {dashboardTabs.map((tab) => (
             <button
               key={tab.value}
               onClick={() => {
@@ -66,7 +67,9 @@ export default function MenuMobile() {
                 tabDashSelected === tab.value ? 'text-primary' : 'text-light'
               }`}
             >
-              <tab.icon style={{ fontSize: 24 }} />
+              {React.cloneElement(tab.icon, {
+                style: { fontSize: 24, color: '#FFFFFF' },
+              })}
               {tab.name}
             </button>
           ))}

@@ -15,19 +15,24 @@ import ButtonStyled from '@/components/button'
 import EditOutlined from '@mui/icons-material/EditOutlined'
 import Apiarist from '@/interfaces/apiarist.interface'
 import dateFormat from 'dateformat'
+import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined'
+import useLoadUsers from '@/hooks/admins/useLoadUsers'
+import ModalUsers from '@/components/modals/ModalUsers'
+import User from '@/interfaces/user.interface'
+import { ROLE_PTBR } from '@/utils/types/roles'
 
-const ApicultoresContent = ({ hidden }: any) => {
+const GestoresContent = ({ hidden }: any) => {
   const [openModal, setOpenModal] = useState(false)
-  const [dataSelected, setDataSelected] = useState<Apiarist | null>(null)
-  const { loadData, data, loading } = useLoadApiarist(hidden)
+  const [dataSelected, setDataSelected] = useState<User | null>(null)
+  const { loadData, data, loading } = useLoadUsers(hidden)
 
   const toggleModalOpen = useCallback(() => {
-    setDataSelected(null)
     setOpenModal(!openModal)
+    setDataSelected(null)
   }, [openModal])
 
   const toogleModalOpenWithData = useCallback(
-    (row: Apiarist) => {
+    (row: User) => {
       setDataSelected(row)
       toggleModalOpen()
     },
@@ -36,18 +41,6 @@ const ApicultoresContent = ({ hidden }: any) => {
 
   const columns = useMemo(
     () => [
-      {
-        header: 'Data Cad.',
-        field: 'created_at',
-        render: (value: any) =>
-          value ? dateFormat(value, 'dd/mm/yyyy HH:MM') : '',
-      },
-      {
-        header: 'Data Att',
-        field: 'updated_at',
-        render: (value: any) =>
-          value ? dateFormat(value, 'dd/mm/yyyy HH:MM') : '',
-      },
       {
         header: 'Nome',
         field: 'name',
@@ -63,12 +56,9 @@ const ApicultoresContent = ({ hidden }: any) => {
         render: (value: any) => masks.phoneMask(value ?? '00000000000'),
       },
       {
-        header: 'Latitude',
-        field: 'latitude',
-      },
-      {
-        header: 'Longitude',
-        field: 'longitude',
+        header: 'Função',
+        field: 'role',
+        render: (value: any) => ROLE_PTBR[value],
       },
       {
         header: 'Status',
@@ -96,10 +86,11 @@ const ApicultoresContent = ({ hidden }: any) => {
     <>
       <div hidden={hidden} className="w-full relative">
         <TopDash
-          title="Apicultores"
-          description={`Gerenciamento dos apicultores, com dados de produção,\n\n apiários e status das colônias.`}
-          icon={GroupOutlinedIcon}
+          title="Gestores"
+          description="Gerenciamento dos gestores, responsáveis por administrar o sistema."
+          icon={AdminPanelSettingsOutlinedIcon}
           onClick={toggleModalOpen}
+          textBtn="Novo Gestor"
         />
 
         {loading ? (
@@ -117,14 +108,14 @@ const ApicultoresContent = ({ hidden }: any) => {
         )}
       </div>
 
-      <ModalApiarist
+      <ModalUsers
         open={openModal}
         setIsClose={toggleModalOpen}
         loadData={loadData}
-        apiaristSelected={dataSelected}
+        userSelected={dataSelected}
       />
     </>
   )
 }
 
-export default ApicultoresContent
+export default GestoresContent

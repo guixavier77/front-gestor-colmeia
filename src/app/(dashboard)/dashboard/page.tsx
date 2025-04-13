@@ -6,8 +6,9 @@ import { useTab } from '@/contexts/tabContext'
 import CustomersContent from '@/app/(dashboard)/dashboard/screens/Apilcutores'
 import DashboardContent from '@/app/(dashboard)/dashboard/screens/Dashboard'
 import MenuMobile from '@/components/menuMobile'
-import { TABS_DASH } from '@/utils/types/tabs'
 import MapaApicultoresContent from './screens/MapaApilcutores'
+import GestoresContent from './screens/Gestores'
+import { TABS_DASH } from '@/constants/dashboardTabs'
 
 export default function Dashboard() {
   const { tabDashSelected } = useTab()
@@ -30,6 +31,8 @@ export default function Dashboard() {
             <MapaApicultoresContent
               hidden={tabDashSelected !== TABS_DASH.MAPA}
             />
+
+            <GestoresContent hidden={tabDashSelected !== TABS_DASH.GESTORES} />
           </div>
         </div>
 

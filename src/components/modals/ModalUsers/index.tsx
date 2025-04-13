@@ -1,96 +1,90 @@
 import ButtonStyled from '@/components/button'
 import InputStyled from '@/components/input'
 import { DefaultContext } from '@/contexts/defaultContext'
+import User from '@/interfaces/user.interface'
 import api from '@/services/api'
 import { colors } from '@/utils/colors/colors'
 import PreFeedBack from '@/utils/feedbackStatus'
 import masks from '@/utils/masks/masks'
+import AddLocationIcon from '@mui/icons-material/AddLocation'
 import ArticleOutlined from '@mui/icons-material/ArticleOutlined'
+import ContactMailIcon from '@mui/icons-material/ContactMail'
 import LocalPhoneOutlined from '@mui/icons-material/LocalPhoneOutlined'
+import LockIcon from '@mui/icons-material/Lock'
+import PasswordIcon from '@mui/icons-material/Password'
 import PersonOutlineOutlined from '@mui/icons-material/PersonOutlineOutlined'
 import { CircularProgress, Modal } from '@mui/material'
 import { useFormik } from 'formik'
 import { useContext, useEffect, useState } from 'react'
+import { validateUser } from '../../../../formik/validators/validator-user'
 import CustomizedSteppers from '../../StepBar'
-import AddLocationIcon from '@mui/icons-material/AddLocation'
-import Apiarist from '@/interfaces/apiarist.interface'
-import LockIcon from '@mui/icons-material/Lock'
-import PasswordIcon from '@mui/icons-material/Password'
-import ContactMailIcon from '@mui/icons-material/ContactMail'
-import { validateApiarist } from '../../../../formik/validators/validator-apiarist'
 
 interface ModalParams {
   open: boolean
   setIsClose: () => void
-  apiaristSelected?: Apiarist | null
+  userSelected?: User | null
   loadData: () => Promise<void>
 }
 
-const ModalApiarist = ({
+const ModalUsers = ({
   open,
   setIsClose,
-  apiaristSelected,
+  userSelected,
   loadData,
 }: ModalParams) => {
   const { onShowFeedBack, user } = useContext(DefaultContext)
   const [viewTwo, setViewTwo] = useState(false)
   const [loading, setloading] = useState(false)
-  console.log(apiaristSelected)
 
   const onSuccess = () => {
-    onShowFeedBack(PreFeedBack.success('Apicultor cadastrado com sucesso!'))
+    onShowFeedBack(PreFeedBack.success('Usuário cadastrado com sucesso!'))
     setIsClose()
   }
 
   const onSuccessUpdate = () => {
-    onShowFeedBack(PreFeedBack.success('Apicultor atualizado com sucesso!'))
+    onShowFeedBack(PreFeedBack.success('Usuário atualizado com sucesso!'))
     setIsClose()
   }
 
   const onError = (e: any) => {
     const errorMessage =
-      e?.response?.data?.error || 'Falhou ao cadastrar apicultor.'
+      e?.response?.data?.error || 'Falhou ao cadastrar usuário.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
-    console.log('[ERROR API /apiarist]', errorMessage)
+    console.log('[ERROR API /users]', errorMessage)
   }
 
   const onErrorUpdate = (e: any) => {
     const errorMessage =
-      e?.response?.data?.error || 'Falhou ao atualizar apicultor.'
+      e?.response?.data?.error || 'Falhou ao atualizar usuário.'
     onShowFeedBack(PreFeedBack.error(errorMessage))
-    console.log('[ERROR API /apiarist]', errorMessage)
+    console.log('[ERROR API /users]', errorMessage)
   }
 
   useEffect(() => {
     if (!open) return formik.resetForm()
 
-    if (!apiaristSelected) {
+    if (!userSelected) {
       formik.setValues({
         cpf: '',
         name: '',
         phone: '',
         email: '',
-        latitude: '',
-        longitude: '',
         password: '',
         active: true,
       })
     }
-    if (apiaristSelected) {
-      const { name, cpf, phone, latitude, longitude, active, email } =
-        apiaristSelected
+    if (userSelected) {
+      const { name, cpf, phone, active, email } = userSelected
       formik.setValues({
         name: name,
         cpf: cpf,
         phone,
-        latitude,
-        longitude,
         active,
         password: 'passfake',
         email,
       })
     }
-  }, [apiaristSelected, open])
+  }, [userSelected, open])
 
   const formik = useFormik({
     initialValues: {
@@ -98,42 +92,36 @@ const ModalApiarist = ({
       email: '',
       name: '',
       phone: '',
-      latitude: '',
-      longitude: '',
       password: '',
       active: true,
     },
-    validate: validateApiarist,
+    validate: validateUser,
     onSubmit: async (values) => {
       setloading(true)
 
-      const data: Omit<Apiarist, 'id' | 'created_at' | 'updated_at'> = {
+      const data: Omit<User, 'id' | 'created_at' | 'updated_at'> = {
         cpf: masks.unmask(values.cpf),
         phone: masks.unmask(values.phone),
         name: values.name,
-        latitude: values.latitude,
-        longitude: values.longitude,
+        role: 'admin',
         active: values.active,
         email: values.email,
         password: values.password,
       }
 
       try {
-        if (apiaristSelected) {
+        if (userSelected) {
           const { password, ...dataWithOutPassword } = data
-          await api.put(
-            `/apiarist/update/${apiaristSelected.id}`,
-            dataWithOutPassword,
-          )
+          await api.put(`/users/update/${userSelected.id}`, dataWithOutPassword)
           onSuccessUpdate()
         } else {
-          await api.post('/apiarist/create', data)
+          await api.post('/users/create', data)
           onSuccess()
         }
 
         await loadData()
       } catch (error) {
-        if (apiaristSelected) {
+        if (userSelected) {
           onErrorUpdate(error)
         } else {
           onError(error)
@@ -144,7 +132,7 @@ const ModalApiarist = ({
     },
   })
 
-  const steps = ['Dados do Apicultor', 'Dados do Login']
+  const steps = ['Dados do Usuário', 'Dados do Login']
 
   return (
     <Modal
@@ -154,7 +142,7 @@ const ModalApiarist = ({
     >
       <div className="bg-white rounded-20 px-5 py-4 w-[85%] max-w-[500px]">
         <p className="font-semibold text-xl text-center uppercase pb-5">
-          {apiaristSelected ? 'Atualizar Apicultor' : 'Cadastro de Apicultor'}
+          {userSelected ? 'Atualizar Usuário' : 'Cadastro de Usuário'}
         </p>
 
         <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
@@ -206,32 +194,6 @@ const ModalApiarist = ({
                 isTouched={formik.touched.phone}
               />
 
-              <InputStyled
-                id="latitude"
-                onChange={formik.handleChange}
-                value={formik.values.latitude}
-                label="Latitude"
-                type="text"
-                placeholder=""
-                icon={<AddLocationIcon style={{ color: colors.black }} />}
-                error={formik.errors.latitude}
-                onBlur={formik.handleBlur}
-                isTouched={formik.touched.latitude}
-              />
-
-              <InputStyled
-                id="longitude"
-                onChange={formik.handleChange}
-                value={formik.values.longitude}
-                label="Longitude"
-                type="text"
-                placeholder=""
-                icon={<AddLocationIcon style={{ color: colors.black }} />}
-                error={formik.errors.longitude}
-                onBlur={formik.handleBlur}
-                isTouched={formik.touched.longitude}
-              />
-
               <div className="flex gap-5 pt-5">
                 <ButtonStyled
                   type="button"
@@ -279,7 +241,7 @@ const ModalApiarist = ({
                 error={formik.errors.email}
                 onBlur={formik.handleBlur}
                 isTouched={formik.touched.email}
-                disabled={apiaristSelected ? true : false}
+                disabled={userSelected ? true : false}
               />
 
               <InputStyled
@@ -293,7 +255,7 @@ const ModalApiarist = ({
                 error={formik.errors.password}
                 onBlur={formik.handleBlur}
                 isTouched={formik.touched.password}
-                disabled={apiaristSelected ? true : false}
+                disabled={userSelected ? true : false}
               />
 
               <div className="flex flex-col gap-2 ">
@@ -358,7 +320,7 @@ const ModalApiarist = ({
                   <ButtonStyled
                     type="submit"
                     styles="w-full"
-                    title={apiaristSelected ? 'Atualizar' : 'Próximo'}
+                    title={userSelected ? 'Atualizar' : 'Próximo'}
                   />
                 )}
               </div>
@@ -370,4 +332,4 @@ const ModalApiarist = ({
   )
 }
 
-export default ModalApiarist
+export default ModalUsers

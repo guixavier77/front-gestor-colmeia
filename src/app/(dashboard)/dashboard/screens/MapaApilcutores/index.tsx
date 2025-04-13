@@ -3,26 +3,29 @@ import { useCallback, useState } from 'react'
 
 import ModalApiarist from '@/components/modals/ModalApiarist'
 import TopDash from '@/components/topDash'
-import useLoadApiarist from '@/hooks/useLoadApiarists'
+import useLoadApiarist from '@/hooks/apiarists/useLoadApiarists'
 import Apiarist from '@/interfaces/apiarist.interface'
 import { colors } from '@/utils/colors/colors'
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined'
 import { CircularProgress } from '@mui/material'
 
-
 const MapaApicultoresContent = ({ hidden }: any) => {
-  const [openModal, setOpenModal] = useState(false);
-  const [dataSelected, setDataSelected] = useState<Apiarist>();
-  const {loadData, data, loading } = useLoadApiarist(hidden)
+  const [openModal, setOpenModal] = useState(false)
+  const [dataSelected, setDataSelected] = useState<Apiarist>()
+  const { loadData, data, loading } = useLoadApiarist(hidden)
 
-  const toggleModalOpen = useCallback(() => setOpenModal(!openModal),[openModal])
+  const toggleModalOpen = useCallback(
+    () => setOpenModal(!openModal),
+    [openModal],
+  )
 
-
-  const toogleModalOpenWithData = useCallback((row: Apiarist) => {
-    setDataSelected(row);
-    toggleModalOpen();
-  },[toggleModalOpen])
-
+  const toogleModalOpenWithData = useCallback(
+    (row: Apiarist) => {
+      setDataSelected(row)
+      toggleModalOpen()
+    },
+    [toggleModalOpen],
+  )
 
   return (
     <>
@@ -43,16 +46,11 @@ const MapaApicultoresContent = ({ hidden }: any) => {
             </div>
           </>
         ) : (
-          <>
-            {/* <Map apiarios={data}/> */}
-            
-          </>
+          <>{/* <Map apiarios={data}/> */}</>
         )}
-
       </div>
 
-
-      <ModalApiarist 
+      <ModalApiarist
         open={openModal}
         setIsClose={toggleModalOpen}
         loadData={loadData}
