@@ -82,7 +82,8 @@ const TableDash: React.FC<TableProps> = ({
             component={Paper}
             sx={{
               ...sx,
-              boxShadow: 'none',
+              boxShadow:
+                '0 1px 3px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.06)',
               borderRadius: 3,
             }}
           >

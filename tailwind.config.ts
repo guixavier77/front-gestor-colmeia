@@ -8,11 +8,18 @@ const config: Config = {
     './src/screens/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    extend: {
+      boxShadow: {
+        top: '0 -4px 6px -1px rgba(0, 0, 0, 0.1)', // sombra voltada para cima
+        'top-lg': '0 -3px 10px -4px rgba(0, 0, 0, 0.1)',
+      },
+    },
     borderRadius: {
+      '3': '3px',
       '40': '40px',
-      'full': '100%',
+      full: '100%',
       '20': '20px',
-      'xl': '12px',
+      xl: '12px',
     },
     screens: {
       d: '1140px',
@@ -27,10 +34,8 @@ const config: Config = {
       gray: '#D9D9D9',
       darkGray: '#6D6D6D',
       light: '#EDEDED',
-      green: '#219F02'
+      green: '#219F02',
     },
-    
-
   },
   plugins: [],
 }
