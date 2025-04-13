@@ -111,7 +111,9 @@ const ModalUsers = ({
 
       try {
         if (userSelected) {
-          const { password, ...dataWithOutPassword } = data
+          const { password, role, ...dataWithOutPassword } = data
+
+          console.log(dataWithOutPassword)
           await api.put(`/users/update/${userSelected.id}`, dataWithOutPassword)
           onSuccessUpdate()
         } else {
