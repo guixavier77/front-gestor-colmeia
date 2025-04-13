@@ -8,6 +8,12 @@ const config: Config = {
     './src/screens/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    extend: {
+      boxShadow: {
+        top: '0 -4px 6px -1px rgba(0, 0, 0, 0.1)', // sombra voltada para cima
+        'top-lg': '0 -3px 10px -4px rgba(0, 0, 0, 0.1)',
+      },
+    },
     borderRadius: {
       '3': '3px',
       '40': '40px',
