@@ -274,8 +274,8 @@ const ModalUsers = ({
                             ${
                               selected
                                 ? isActive
-                                  ? 'bg-green text-white border-green'
-                                  : 'bg-red text-white border-red'
+                                  ? 'bg-green/70 text-white border-green'
+                                  : 'bg-red/70 text-white border-red'
                                 : 'bg-light text-black border-darkGray'
                             }`}
                       >
