@@ -11,7 +11,7 @@ const Map = ({ data }: { data: Apiarist[] }) => {
     : [-23.55052, -46.633308] 
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-md">
+    <div>
         <p className="text-black text-xl font-bold uppercase mb-2">
           Localização dos Apiários
         </p>
