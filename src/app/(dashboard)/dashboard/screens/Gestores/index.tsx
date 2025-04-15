@@ -20,6 +20,7 @@ import useLoadUsers from '@/hooks/admins/useLoadUsers'
 import ModalUsers from '@/components/modals/ModalUsers'
 import User from '@/interfaces/user.interface'
 import { ROLE_PTBR } from '@/utils/types/roles'
+import ButtonActive from '@/components/buttonActive'
 
 const GestoresContent = ({ hidden }: any) => {
   const [openModal, setOpenModal] = useState(false)
@@ -62,7 +63,13 @@ const GestoresContent = ({ hidden }: any) => {
       {
         header: 'Status',
         field: 'active',
-        render: (value: any) => (value ? 'Ativo' : 'Inativo'),
+        render: (value: any) => (
+          <ButtonActive 
+            active={value}
+
+          />
+      
+        ),
       },
       {
         header: 'Editar',
@@ -71,7 +78,7 @@ const GestoresContent = ({ hidden }: any) => {
           <ButtonStyled
             onClick={() => toogleModalOpenWithData(row)}
             type="button"
-            icon={<EditOutlined />}
+            icon={<EditOutlined  style={{fontSize: 20}} />}
             styles="px-1 h-8 w-8"
             title=""
           />

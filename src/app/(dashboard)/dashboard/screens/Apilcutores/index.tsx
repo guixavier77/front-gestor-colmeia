@@ -15,6 +15,7 @@ import ButtonStyled from '@/components/button'
 import EditOutlined from '@mui/icons-material/EditOutlined'
 import Apiarist from '@/interfaces/apiarist.interface'
 import dateFormat from 'dateformat'
+import ButtonActive from '@/components/buttonActive'
 
 const ApicultoresContent = ({ hidden }: any) => {
   const [openModal, setOpenModal] = useState(false)
@@ -52,6 +53,10 @@ const ApicultoresContent = ({ hidden }: any) => {
         header: 'Nome',
         field: 'name',
       },
+      // {
+      //   header: 'E-mail',
+      //   field: 'email',
+      // },
       {
         header: 'CPF',
         field: 'cpf',
@@ -73,7 +78,13 @@ const ApicultoresContent = ({ hidden }: any) => {
       {
         header: 'Status',
         field: 'active',
-        render: (value: any) => (value ? 'Ativo' : 'Inativo'),
+        render: (value: any) => (
+          <ButtonActive 
+            active={value}
+
+          />
+      
+        ),
       },
       {
         header: 'Editar',
@@ -82,7 +93,7 @@ const ApicultoresContent = ({ hidden }: any) => {
           <ButtonStyled
             onClick={() => toogleModalOpenWithData(row)}
             type="button"
-            icon={<EditOutlined />}
+            icon={<EditOutlined  style={{fontSize: 20}} />}
             styles="px-1 h-8 w-8"
             title=""
           />

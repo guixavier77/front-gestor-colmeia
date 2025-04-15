@@ -7,7 +7,7 @@ import useLoadApiarist from '@/hooks/apiarists/useLoadApiarists'
 import Apiarist from '@/interfaces/apiarist.interface'
 import { colors } from '@/utils/colors/colors'
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined'
-import { CircularProgress } from '@mui/material'
+import { CircularProgress, Skeleton } from '@mui/material'
 import dynamic from 'next/dynamic'
 
 const LeafletMap = dynamic(() => import('../../../../../components/map/Map'), {ssr: false})
@@ -26,18 +26,21 @@ const MapaApicultoresContent = ({ hidden }: any) => {
           icon={MapOutlinedIcon}
           // onClick={toggleModalOpen}
         />
+        <div className="bg-white p-4 rounded-xl shadow-md">
 
-        {loading ? (
-          <>
-            <div className="flex h-3/4 justify-center w-full items-center">
-              <CircularProgress
-                style={{ width: 80, height: 80, color: colors.primary }}
+          {loading ? (
+            <>
+              <Skeleton
+                variant="rectangular"
+                height={400}
+                className="rounded-xl bg-light"
               />
-            </div>
-          </>
-        ) : (
-          <LeafletMap data={data} />
-        )}
+            </>
+          ) : (
+            <LeafletMap data={data} />
+          )}
+
+        </div>
       </div>
 
       

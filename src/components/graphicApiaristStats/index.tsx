@@ -55,12 +55,12 @@ const GraphicApiaristStats = ({ data }: { data: ApiaristStats }) => {
             <Legend />
             <Bar
               dataKey="totalAssociates"
-              name="Associados"
+              name="Ativos"
               fill={colors.primary}
             />
             <Bar
               dataKey="totalDisassociated"
-              name="Desassociados"
+              name="Inativos"
               fill={colors.black}
             />
           </BarChart>
