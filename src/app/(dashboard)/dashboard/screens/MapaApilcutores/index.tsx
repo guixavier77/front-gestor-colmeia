@@ -8,24 +8,14 @@ import Apiarist from '@/interfaces/apiarist.interface'
 import { colors } from '@/utils/colors/colors'
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined'
 import { CircularProgress } from '@mui/material'
+import dynamic from 'next/dynamic'
+
+const LeafletMap = dynamic(() => import('../../../../../components/map/Map'), {ssr: false})
+
 
 const MapaApicultoresContent = ({ hidden }: any) => {
-  const [openModal, setOpenModal] = useState(false)
-  const [dataSelected, setDataSelected] = useState<Apiarist>()
+
   const { loadData, data, loading } = useLoadApiarist(hidden)
-
-  const toggleModalOpen = useCallback(
-    () => setOpenModal(!openModal),
-    [openModal],
-  )
-
-  const toogleModalOpenWithData = useCallback(
-    (row: Apiarist) => {
-      setDataSelected(row)
-      toggleModalOpen()
-    },
-    [toggleModalOpen],
-  )
 
   return (
     <>
@@ -46,16 +36,11 @@ const MapaApicultoresContent = ({ hidden }: any) => {
             </div>
           </>
         ) : (
-          <>{/* <Map apiarios={data}/> */}</>
+          <LeafletMap data={data} />
         )}
       </div>
 
-      <ModalApiarist
-        open={openModal}
-        setIsClose={toggleModalOpen}
-        loadData={loadData}
-        apiaristSelected={dataSelected}
-      />
+      
     </>
   )
 }

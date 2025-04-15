@@ -59,10 +59,10 @@ const TableDash: React.FC<TableProps> = ({
   }, [currentPage, filteredData])
 
   return (
-    <div className="relative flex flex-col gap-4 mt-10 h-[80%] justify-between py-3 w-full">
+    <div className="relative flex flex-col gap-4 mt-10 s:h-[70%] d:h-[90%] justify-between py-3 w-full">
       <div>
         {search && (
-          <div className="flex justify-end mb-4">
+          <div className="flex justify-end s:justify-start t:justify-start mb-4">
             <InputStyled
               id="search"
               type="search"
