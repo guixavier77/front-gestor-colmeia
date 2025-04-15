@@ -10,9 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       boxShadow: {
-        top: '0 -4px 6px -1px rgba(0, 0, 0, 0.1)', // sombra voltada para cima
-        'top-lg': '0 -3px 10px -4px rgba(0, 0, 0, 0.1)',
-      },
+        top: '0 -1px 10px 0px rgba(0, 0, 0, 0.1)', 
+        'top-lg': '0 -7px 20px -7px rgba(0, 0, 0, 0.1)',
+      }
+      
     },
     borderRadius: {
       '3': '3px',

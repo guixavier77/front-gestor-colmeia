@@ -18,7 +18,7 @@ const DashboardContent = ({ hidden }: { hidden: boolean }) => {
     useLoadApiaristLatest(hidden)
 
   return (
-    <div hidden={hidden} className="w-full px-4 md:px-6">
+    <div hidden={hidden} className="w-full ">
       <TopDash
         title="Estatísticas"
         description="Veja as principais métricas e informações dos apicultores associados."
@@ -43,12 +43,12 @@ const DashboardContent = ({ hidden }: { hidden: boolean }) => {
           <>
             <CardDash
               icon={<Group />}
-              title="Associados"
+              title="Membros Ativos"
               value={data?.totalAssociates ?? 0}
             />
             <CardDash
               icon={<GroupOffIcon />}
-              title="Desassociados"
+              title="Membros Inativos"
               value={data?.totalDisassociated ?? 0}
             />
           </>
